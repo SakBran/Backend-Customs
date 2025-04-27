@@ -1,0 +1,45 @@
+h1 {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: left;
+  padding-left: 20px;
+}
+
+p {
+  font-size: large;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  display: table;
+  clear: both;
+}
+
+.QRLogo {
+  height: 100px;
+}
+
+.row {
+  text-align: left;
+  padding-left: 20px;
+}
+
+.certificate-logo {
+  display: block;
+  margin: 0 auto;
+}
+
+.column {
+  float: left;
+  width: 40%;
+  padding: 10px;
+  /*height:auto; */
+  overflow: 'auto',
+}
+
+
+.subcolumn {
+  float: left;
+  width: 35%;
+  height: 20px;
+}

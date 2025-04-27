@@ -1,0 +1,18 @@
+.links {
+    white-space: pre-line;
+}
+
+.custom thead{
+    background-color: #bb5b67;
+    color: white;
+}
+
+.custom .ant-tabs-tab-active{
+    background-color: #bb5b67 !important;
+}
+.custom .ant-tabs-tab-active .ant-tabs-tab-btn{
+    color: white !important;
+}
+.custom .ant-tabs-nav{
+    margin: 0px !important;
+}

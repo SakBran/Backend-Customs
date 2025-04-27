@@ -1,0 +1,7 @@
+.new-file-color .ant-upload-list-item .ant-upload-list-item-name {
+    color: green !important; /* More specific targeting */
+  }
+
+  .blue .ant-upload-list-item .ant-upload-list-item-name {
+    color: blue !important; /* Original files should be blue */
+  }

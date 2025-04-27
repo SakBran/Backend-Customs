@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using API.Controllers.Auth.Request;
 using API.Interface;
 using API.Model;
 using Microsoft.AspNetCore.Authorization;
@@ -22,10 +23,15 @@ namespace API.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> Login(User data)
+        public async Task<IActionResult> Login(AuthRequestDTO request)
         {
             try
             {
+                var data = new User()
+                {
+                    Name = request.Username,
+                    Password = request.Password
+                };
                 var result = await _jWTManager.Authenticate(data);
                 if (result != null)
                 {
@@ -42,5 +48,11 @@ namespace API.Controllers
             }
         }
 
+        [HttpGet]
+        [Authorize]
+        public IActionResult Get()
+        {
+            return Ok("You are authenticated");
+        }
     }
 }

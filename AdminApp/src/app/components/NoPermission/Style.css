@@ -1,0 +1,31 @@
+
+  
+  .content {
+    background-color: #fff;
+    padding: 40px;
+    /* border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); */
+    text-align: center;
+  }
+  
+  .icon {
+    font-size: 48px;
+    color: #faad14;
+    margin-bottom: 20px;
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .message {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .link {
+    margin-top: 20px;
+  }
+  
