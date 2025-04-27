@@ -1,0 +1,72 @@
+# NuGet packages
+*.nuget.props
+*.nuget.targets
+
+# Visual Studio files
+.vs/
+*.vscode/
+*.sln
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.ide
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+
+# MSTest Test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# NUNIT
+*.VisualState.xml
+TestResult.xml
+
+# Test project results
+[Dd]ebug/
+[Rr]elease/
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*_i.c
+*_p.c
+*.ilk
+*.meta
+*.obj
+*.pch
+*.pdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*_wpftmp.csproj
+*.log
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+*.scc
+
+# Publish or deploy files
+_PublishedWebsites/
+PublishProfiles/
+*.publishproj
+obj/API.csproj.nuget.dgspec.json
+obj/project.assets.json
+obj/Debug/net6.0/API.GeneratedMSBuildEditorConfig.editorconfig
+obj/project.assets.json
+obj/API.csproj.nuget.dgspec.json
