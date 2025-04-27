@@ -26,7 +26,7 @@ namespace API.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<ActionResult<ApiResult<T>>> Get(
+        public virtual async Task<ActionResult<ApiResult<T>>> Get(
                   int pageIndex = 0,
                   int pageSize = 10,
                   string? sortColumn = null,
@@ -49,7 +49,7 @@ namespace API.Controllers
         //GET: api/Cities/5
         [Authorize]
         [HttpGet("{id}")]
-        public async Task<ActionResult<T>> Get(string id)
+        public virtual async Task<ActionResult<T>> Get(string id)
         {
             var data = await _context.FindAsync<T>(id);
             if (data == null)
@@ -64,7 +64,7 @@ namespace API.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [Authorize]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutData(string id, T obj)
+        public virtual async Task<IActionResult> PutData(string id, T obj)
         {
             var oldData = await _context.FindAsync<T>(id);
             if (oldData != null)
@@ -89,7 +89,7 @@ namespace API.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult<T>> PostData(T data)
+        public virtual async Task<ActionResult<T>> PostData(T data)
         {
 
             await _context.AddAsync(data);
@@ -100,7 +100,7 @@ namespace API.Controllers
         [Authorize]
         [HttpPost]
         [Route("PostDataList")]
-        public async Task<ActionResult<T>> PostDataList(List<T> data)
+        public virtual async Task<ActionResult<T>> PostDataList(List<T> data)
         {
 
             await _context.AddRangeAsync(data);
@@ -112,7 +112,7 @@ namespace API.Controllers
         // DELETE: api/Cities/5
         [Authorize]
         [HttpDelete("{id}")]
-        public async Task<ActionResult<T>> DeleteData(string id)
+        public virtual async Task<ActionResult<T>> DeleteData(string id)
         {
             var temp = await _context.FindAsync<T>(id);
             if (temp == null)

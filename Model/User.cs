@@ -21,5 +21,7 @@ namespace API.Model
         public string Password { get; set; }
         [Required]
         public string Permission { get; set; }
+
+        public string IsActive { get; set; } = "True";
     }
 }
