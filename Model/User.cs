@@ -22,6 +22,7 @@ namespace API.Model
         [Required]
         public string Permission { get; set; }
 
-        public string IsActive { get; set; } = "True";
+        public string IsActive { get; set; } = "0";
+        public string FullName { get; set; }
     }
 }

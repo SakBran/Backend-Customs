@@ -55,7 +55,6 @@ namespace API.Controllers
         [HttpPost]
         public override async Task<ActionResult<User>> PostData(User data)
         {
-            data.IsActive = "True";
 
             await _context.AddAsync(data);
             await _context.SaveChangesAsync();
