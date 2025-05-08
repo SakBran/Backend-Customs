@@ -11,6 +11,7 @@ namespace API.Model
             this.Name = "";
             this.Password = "";
             this.Permission = "";
+            this.FullName= "";
 
         }
         [Key]

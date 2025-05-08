@@ -7953,11 +7953,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/saobranaung/Code/Ministry of Customs/Backend-Customs/API.csproj",
+      "projectUniqueName": "/Users/saobranaung/Code/Ministry of Customs/BackendCustoms/API.csproj",
       "projectName": "API",
-      "projectPath": "/Users/saobranaung/Code/Ministry of Customs/Backend-Customs/API.csproj",
+      "projectPath": "/Users/saobranaung/Code/Ministry of Customs/BackendCustoms/API.csproj",
       "packagesPath": "/Users/saobranaung/.nuget/packages/",
-      "outputPath": "/Users/saobranaung/Code/Ministry of Customs/Backend-Customs/obj/",
+      "outputPath": "/Users/saobranaung/Code/Ministry of Customs/BackendCustoms/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/saobranaung/.nuget/NuGet/NuGet.Config"

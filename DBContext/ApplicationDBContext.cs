@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore;
 using API.Model;
+using BackendCustoms.Model;
 
 namespace API.DBContext
 {
@@ -15,6 +16,7 @@ namespace API.DBContext
         //public DbSet<LogModel> LogModels { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<TokenModel> TokenModels { get; set; }
+        public DbSet<SystemSetting> systemSettings { get; set; }
 
 
 

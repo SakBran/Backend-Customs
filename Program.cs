@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Text;
 
 internal class Program
@@ -27,7 +28,8 @@ internal class Program
             x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         }).AddJwtBearer(o =>
         {
-            var Key = Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]);
+            var jwtKey = builder.Configuration["JWT:Key"] ?? throw new InvalidOperationException("JWT:Key is not configured.");
+            var Key = Encoding.UTF8.GetBytes(jwtKey);
             o.SaveToken = true;
             o.TokenValidationParameters = new TokenValidationParameters
             {
@@ -105,12 +107,9 @@ internal class Program
         });
         app.UseAuthentication();
         app.UseAuthorization();
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapControllerRoute(
-                name: "default",
-                pattern: "{controller}/{action=Index}/{id?}");
-        });
+        app.MapControllerRoute(
+            name: "default",
+            pattern: "{controller}/{action=Index}/{id?}");
         app.MapControllers();
         app.Run();
     }
