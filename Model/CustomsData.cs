@@ -13,6 +13,7 @@ namespace BackendCustoms.Model
         public string id { get; set; }
 
         public DateTime? ReceivedDatetime { get; set; }
+        public string? CEIRID { get; set; }
         public string? MACCSCEIRID { get; set; }
         public string? RONo { get; set; }
         public DateTime? RODate { get; set; }
