@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using API.Controllers.Auth.Request;
 using API.Interface;
 using API.Model;
+using BackendCustoms.Controllers.Auth.Request;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +23,7 @@ namespace API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost]
+        [HttpPost("Login")]
         public async Task<IActionResult> Login(AuthRequestDTO request)
         {
             try
@@ -46,6 +47,19 @@ namespace API.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
+        }
+        
+        [AllowAnonymous]
+        [HttpPost("RefreshToken")]
+        public async Task<IActionResult> RefreshToken(RefrehTokenRequestDTO request)
+        {   
+            var response= new TokenModel();
+            await Task.Run(() =>
+            {
+                response = _jWTManager.RefreshToken(request.RefreshToken);
+            });
+            
+            return Ok(response);
         }
 
         [HttpGet]
