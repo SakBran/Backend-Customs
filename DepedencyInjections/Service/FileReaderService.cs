@@ -3,41 +3,90 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using BackendCustoms.DepedencyInjections.Interface;
 using BackendCustoms.Model;
 
 namespace BackendCustoms.DepedencyInjections.Service
 {
-    public class FileReaderService
+    public class FileReaderService:IFileReaderService
     {
         public List<CustomsData> ReadAndMoveFiles(SystemSetting setting)
         {
             var result = new List<CustomsData>();
 
-            if (!Directory.Exists(setting.completeFolder))
-            {
-                Directory.CreateDirectory(setting.completeFolder);
-            }
+            EnsureDirectoryExists(setting.completeFolder);
 
-            var files = Directory.GetFiles(setting.sourceFolder, setting.toReadFileName, SearchOption.TopDirectoryOnly)
-                .Where(file => file.EndsWith(".edi", StringComparison.OrdinalIgnoreCase) && file.StartsWith(setting.toReadFileNameStartWith, StringComparison.OrdinalIgnoreCase))
-                .ToList();
+            var files = GetEligibleFiles(setting);
 
             foreach (var filePath in files)
             {
-                var lines = File.ReadAllLines(filePath);
-
-                string line1 = lines.Length >= 1 ? lines[0] : string.Empty;
-                string line2 = lines.Length >= 2 ? lines[1] : string.Empty;
-                string line4 = lines.Length >= 4 ? lines[3] : string.Empty;
-
-                //result.Add((Path.GetFileName(filePath), line1, line2, line4));
-
-                // Move file to 'complete' folder
-                var destinationPath = Path.Combine(setting.completeFolder, Path.GetFileName(filePath));
-                File.Move(filePath, destinationPath, overwrite: true);
+            var customsData = ParseFileToCustomsData(filePath, setting);
+            if (customsData != null)
+            {
+                result.Add(customsData);
+                MoveFileToCompleteFolder(filePath, setting.completeFolder);
+            }
             }
 
             return result;
+        }
+
+        private void EnsureDirectoryExists(string folderPath)
+        {
+            if (!Directory.Exists(folderPath))
+            {
+            Directory.CreateDirectory(folderPath);
+            }
+        }
+
+        private List<string> GetEligibleFiles(SystemSetting setting)
+        {
+            return Directory.GetFiles(setting.sourceFolder, setting.toReadFileName, SearchOption.TopDirectoryOnly)
+            .Where(file => file.EndsWith(".edi", StringComparison.OrdinalIgnoreCase) &&
+                       file.StartsWith(setting.toReadFileNameStartWith, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+        }
+
+        private CustomsData ParseFileToCustomsData(string filePath, SystemSetting setting)
+        {
+            var lines = File.ReadAllLines(filePath);
+
+            return new CustomsData
+            {
+            MACCSCEIRID = GetLineValue(lines, setting.CEIRID),
+            RONo = GetLineValue(lines, setting.RONo),
+            RODate = GetLineValueAsDate(lines, setting.RODate),
+            CD = GetLineValue(lines, setting.CD),
+            CT = GetLineValue(lines, setting.CT),
+            AT = GetLineValue(lines, setting.AT),
+            RF = GetLineValue(lines, setting.RF),
+            ReceivedDatetime = DateTime.Now,
+            };
+        }
+
+        private string GetLineValue(string[] lines, string indexSetting)
+        {
+            if (int.TryParse(indexSetting, out int index) && index > 0 && index <= lines.Length)
+            {
+            return lines[index - 1];
+            }
+            return string.Empty;
+        }
+
+        private DateTime? GetLineValueAsDate(string[] lines, string indexSetting)
+        {
+            var value = GetLineValue(lines, indexSetting);
+            if (DateTime.TryParse(value, out DateTime date))
+            {
+            return date;
+            }
+            return null;
+        }
+
+        private void MoveFileToCompleteFolder(string filePath, string completeFolder)
+        {
+            var destinationPath = Path.Combine(completeFolder, Path.GetFileName(filePath));
+            File.Move(filePath, destinationPath, overwrite: true);
         }
     }
 }

@@ -26,13 +26,13 @@ namespace BackendCustoms.Model
         //MR00*
         public string toReadFileName { get; set; }
         public string toReadFileNameStartWith { get; set; }
-        public string? CEIRID { get; set; }
-        public string? RONo { get; set; } // RO-No
-        public string? RODate { get; set; } // RO-Date
-        public string? CD { get; set; } // CD
-        public string? CT { get; set; } // CT
-        public string? AT { get; set; } // AT
-        public string? RF { get; set; } // RF
+        public string CEIRID { get; set; }
+        public string RONo { get; set; } // RO-No
+        public string RODate { get; set; } // RO-Date
+        public string CD { get; set; } // CD
+        public string CT { get; set; } // CT
+        public string AT { get; set; } // AT
+        public string RF { get; set; } // RF
     }
 
 }

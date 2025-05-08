@@ -11,7 +11,7 @@ namespace BackendCustoms.Model
         }
         [Key]
         public string id { get; set; }
-        public int MyProperty { get; set; }
+
         public DateTime? ReceivedDatetime { get; set; }
         public string? MACCSCEIRID { get; set; }
         public string? RONo { get; set; }
