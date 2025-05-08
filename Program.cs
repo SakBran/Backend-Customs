@@ -1,6 +1,8 @@
 using API.DBContext;
 using API.Interface;
 using API.Service;
+using BackendCustoms.DepedencyInjections.Interface;
+using BackendCustoms.DepedencyInjections.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -10,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.IO;
 using System.Text;
 
 internal class Program
@@ -44,6 +47,7 @@ internal class Program
         });
         builder.Services.AddScoped<IJWTManagerService, JWTManagerService>();
         builder.Services.AddScoped(typeof(ICommonService<>), typeof(CommonService<>));
+        builder.Services.AddSingleton<IFileReaderService,FileReaderService>();
 
         var app = builder.Build();
 

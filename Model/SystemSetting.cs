@@ -17,6 +17,13 @@ namespace BackendCustoms.Model
             this.completeFolder = string.Empty;
             this.toReadFileName = string.Empty;
             this.toReadFileNameStartWith = string.Empty;
+            this.CEIRID = string.Empty;
+            this.RONo = string.Empty;
+            this.RODate = string.Empty;
+            this.CD = string.Empty;
+            this.CT = string.Empty;
+            this.AT = string.Empty;
+            this.RF = string.Empty;
         }
         [Key]
         public string Id { get; set; }
