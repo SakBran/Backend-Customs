@@ -10,11 +10,23 @@ namespace BackendCustoms.Model
 
     public class SystemSetting
     {
+        public SystemSetting()
+        {
+            this.Id = Guid.NewGuid().ToString();
+            this.sourceFolder = string.Empty;
+            this.completeFolder = string.Empty;
+            this.toReadFileName = string.Empty;
+            this.toReadFileNameStartWith = string.Empty;
+        }
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int id { get; set; }
-        public string? ediPath { get; set; }
-        public string? CEIRID { get; set; } 
+        public string Id { get; set; }
+        //public string? ediPath { get; set; }
+        public string sourceFolder { get; set; }
+        public string completeFolder { get; set; }
+        //MR00*
+        public string toReadFileName { get; set; }
+        public string toReadFileNameStartWith { get; set; }
+        public string? CEIRID { get; set; }
         public string? RONo { get; set; } // RO-No
         public string? RODate { get; set; } // RO-Date
         public string? CD { get; set; } // CD

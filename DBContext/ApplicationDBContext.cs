@@ -17,6 +17,7 @@ namespace API.DBContext
         public DbSet<User> Users { get; set; }
         public DbSet<TokenModel> TokenModels { get; set; }
         public DbSet<SystemSetting> systemSettings { get; set; }
+        public DbSet<CustomsData> CustomsDatas { get; set; }
 
 
 
