@@ -56,14 +56,13 @@ namespace BackendCustoms.DepedencyInjections.Service
             MACCSCEIRID = GetLineValue(lines, setting.CEIRID),
             RONo = GetLineValue(lines, setting.RONo),
             RODate = GetLineValueAsDate(lines, setting.RODate),
-            CD = GetLineValue(lines, setting.CD),
-            CT = GetLineValue(lines, setting.CT),
-            AT = GetLineValue(lines, setting.AT),
-            RF = GetLineValue(lines, setting.RF),
+            CD = GetLineValueDecimal(lines, setting.CD),
+            CT = GetLineValueDecimal(lines, setting.CT),
+            AT = GetLineValueDecimal(lines, setting.AT),
+            RF = GetLineValueDecimal(lines, setting.RF),
             ReceivedDatetime = DateTime.Now,
             };
         }
-
         private string GetLineValue(string[] lines, string indexSetting)
         {
             if (int.TryParse(indexSetting, out int index) && index > 0 && index <= lines.Length)
@@ -71,6 +70,14 @@ namespace BackendCustoms.DepedencyInjections.Service
             return lines[index - 1];
             }
             return string.Empty;
+        }
+        private decimal GetLineValueDecimal(string[] lines, string indexSetting)
+        {
+            if (int.TryParse(indexSetting, out int index) && index > 0 && index <= lines.Length)
+            {
+            return Convert.ToDecimal(lines[index - 1]);
+            }
+            return new decimal(0);
         }
 
         private DateTime? GetLineValueAsDate(string[] lines, string indexSetting)

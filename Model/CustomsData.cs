@@ -17,10 +17,10 @@ namespace BackendCustoms.Model
         public string? MACCSCEIRID { get; set; }
         public string? RONo { get; set; }
         public DateTime? RODate { get; set; }
-        public string? CD { get; set; }
-        public string? CT { get; set; }
-        public string? AT { get; set; }
-        public string? RF { get; set; }
+        public decimal? CD { get; set; }
+        public decimal? CT { get; set; }
+        public decimal? AT { get; set; }
+        public decimal? RF { get; set; }
         public DateTime? SentDatetime { get; set; }
         public string? Remark { get; set; }
         public string? EditBy { get; set; }
