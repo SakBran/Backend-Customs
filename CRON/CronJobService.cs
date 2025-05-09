@@ -17,24 +17,18 @@ namespace BackendCustoms.CRON
     {
         private readonly ILogger<CronJobService> _logger;
         private readonly TimeSpan _scheduleInterval = TimeSpan.FromSeconds(5); // simulate CRON (e.g., every 5 mins)
-        // private readonly IGetSystemSetting _sys;
         private readonly IFileReaderService _fileReader;
-        // private readonly ICommonService<CustomsData> _customDataService;
         private readonly ICEIR_API_Service _irdService;
         private readonly IServiceScopeFactory _scopeFactory;
 
         public CronJobService(
          ILogger<CronJobService> logger,
-        //  IGetSystemSetting sys,
          IFileReaderService fileReader,
-        //  ICommonService<CustomsData> customDataService,
          ICEIR_API_Service irdService,
          IServiceScopeFactory scopeFactory)
         {
             _logger = logger;
-            // _sys = sys;
             _fileReader = fileReader;
-            // _customDataService = customDataService;
             _irdService = irdService;
             _scopeFactory = scopeFactory;
         }
