@@ -24,6 +24,7 @@ namespace BackendCustoms.Model
             this.CT = string.Empty;
             this.AT = string.Empty;
             this.RF = string.Empty;
+
         }
         [Key]
         public string Id { get; set; }
@@ -40,6 +41,8 @@ namespace BackendCustoms.Model
         public string CT { get; set; } // CT
         public string AT { get; set; } // AT
         public string RF { get; set; } // RF
+        public string AuthorizationTokenURL_CEIR { get; set; } = string.Empty;
+        public string PaymentConfirmationURL_CEIR { get; set; } = string.Empty;
     }
 
 }

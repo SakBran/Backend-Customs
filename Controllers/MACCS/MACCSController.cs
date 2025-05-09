@@ -15,10 +15,10 @@ namespace BackendCustoms.Controllers.IRD
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class IRDController : ControllerBase
+    public class MACCSController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        public IRDController(ApplicationDbContext context)
+        public MACCSController(ApplicationDbContext context)
         {
             _context = context;
         }
