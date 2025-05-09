@@ -28,13 +28,7 @@ namespace API.Controllers
             {
                 return NotFound();
             }
-            // only open if you need to change the status of the user to active 
-            // if (string.IsNullOrEmpty(user.IsActive) || user.IsActive == null)
-            // {
-            //     user.IsActive = "True";
-            // }
 
-            // for active and deactivation 
             if (user.IsActive == "True")
             {
                 user.IsActive = "False";
