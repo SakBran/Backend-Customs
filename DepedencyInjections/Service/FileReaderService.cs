@@ -8,7 +8,7 @@ using BackendCustoms.Model;
 
 namespace BackendCustoms.DepedencyInjections.Service
 {
-    public class FileReaderService:IFileReaderService
+    public class FileReaderService : IFileReaderService
     {
         public List<CustomsData> ReadAndMoveFiles(SystemSetting setting)
         {
@@ -20,12 +20,12 @@ namespace BackendCustoms.DepedencyInjections.Service
 
             foreach (var filePath in files)
             {
-            var customsData = ParseFileToCustomsData(filePath, setting);
-            if (customsData != null)
-            {
-                result.Add(customsData);
-                MoveFileToCompleteFolder(filePath, setting.completeFolder);
-            }
+                var customsData = ParseFileToCustomsData(filePath, setting);
+                if (customsData != null)
+                {
+                    result.Add(customsData);
+                    MoveFileToCompleteFolder(filePath, setting.completeFolder);
+                }
             }
 
             return result;
@@ -35,7 +35,7 @@ namespace BackendCustoms.DepedencyInjections.Service
         {
             if (!Directory.Exists(folderPath))
             {
-            Directory.CreateDirectory(folderPath);
+                Directory.CreateDirectory(folderPath);
             }
         }
 
@@ -53,21 +53,21 @@ namespace BackendCustoms.DepedencyInjections.Service
 
             return new CustomsData
             {
-            MACCSCEIRID = GetLineValue(lines, setting.CEIRID),
-            RONo = GetLineValue(lines, setting.RONo),
-            RODate = GetLineValueAsDate(lines, setting.RODate),
-            CD = GetLineValueDecimal(lines, setting.CD),
-            CT = GetLineValueDecimal(lines, setting.CT),
-            AT = GetLineValueDecimal(lines, setting.AT),
-            RF = GetLineValueDecimal(lines, setting.RF),
-            ReceivedDatetime = DateTime.Now,
+                MACCSCEIRID = GetLineValue(lines, setting.CEIRID),
+                RONo = GetLineValue(lines, setting.RONo),
+                RODate = GetLineValueAsDate(lines, setting.RODate),
+                CD = GetLineValueDecimal(lines, setting.CD),
+                CT = GetLineValueDecimal(lines, setting.CT),
+                AT = GetLineValueDecimal(lines, setting.AT),
+                RF = GetLineValueDecimal(lines, setting.RF),
+                ReceivedDatetime = DateTime.Now,
             };
         }
         private string GetLineValue(string[] lines, string indexSetting)
         {
             if (int.TryParse(indexSetting, out int index) && index > 0 && index <= lines.Length)
             {
-            return lines[index - 1];
+                return lines[index - 1];
             }
             return string.Empty;
         }
@@ -75,7 +75,7 @@ namespace BackendCustoms.DepedencyInjections.Service
         {
             if (int.TryParse(indexSetting, out int index) && index > 0 && index <= lines.Length)
             {
-            return Convert.ToDecimal(lines[index - 1]);
+                return Convert.ToDecimal(lines[index - 1]);
             }
             return new decimal(0);
         }
@@ -85,7 +85,7 @@ namespace BackendCustoms.DepedencyInjections.Service
             var value = GetLineValue(lines, indexSetting);
             if (DateTime.TryParse(value, out DateTime date))
             {
-            return date;
+                return date;
             }
             return null;
         }
