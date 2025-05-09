@@ -47,7 +47,16 @@ namespace BackendCustoms.CRON
             {
                 using (var scope = _scopeFactory.CreateScope())
                 {
-                    await DoWork(scope);
+                    try
+                    {
+                        await DoWork(scope);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogInformation("Error :" + ex.Message);
+                    }
+
+
                 }
                 await Task.Delay(_scheduleInterval, stoppingToken);
             }
