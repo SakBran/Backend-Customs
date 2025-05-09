@@ -19,6 +19,7 @@ namespace API.DBContext
         public DbSet<SystemSetting> systemSettings { get; set; }
         public DbSet<CustomsData> CustomsDatas { get; set; }
         public DbSet<CeiridFromIRD> ceiridFromIRDs { get; set; }
+        public DbSet<CeiridFromIRD_DeletedLog> ceiridFromIRD_DeletedLogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
