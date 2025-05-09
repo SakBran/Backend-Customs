@@ -46,10 +46,13 @@ internal class Program
                 IssuerSigningKey = new SymmetricSecurityKey(Key)
             };
         });
+        builder.Services.AddMemoryCache();
         builder.Services.AddScoped<IJWTManagerService, JWTManagerService>();
         builder.Services.AddScoped(typeof(ICommonService<>), typeof(CommonService<>));
         builder.Services.AddSingleton<IFileReaderService, FileReaderService>();
         builder.Services.AddScoped<IGetSystemSetting, GetSystemSetting>();
+        builder.Services.AddSingleton<ICEIR_API_Service, CEIR_API_Service>();
+
 
         var app = builder.Build();
 
