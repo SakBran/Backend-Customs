@@ -61,17 +61,18 @@ namespace BackendCustoms.DepedencyInjections.Service
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             // Make the POST request
             var response = await client.PostAsync(request.ApiURl, content);
+            return response.StatusCode.ToString();
             // Handle the response
-            if (response.IsSuccessStatusCode)
-            {
-                var result = await response.Content.ReadAsStringAsync();
-                return result;
-            }
-            else
-            {
-                Console.WriteLine($"Error: {response.StatusCode}");
-                throw new Exception($"Error: {response.StatusCode}");
-            }
+            // if (response.StatusCode)
+            // {
+            //     var result = await response.Content.ReadAsStringAsync();
+            //     return result;
+            // }
+            // else
+            // {
+            //     Console.WriteLine($"Error: {response.StatusCode}");
+            //     throw new Exception($"Error: {response.StatusCode}");
+            // }
         }
 
         private async Task<TokenResponseDTO> FetchTokenAsync(GetTokenRequest request)
