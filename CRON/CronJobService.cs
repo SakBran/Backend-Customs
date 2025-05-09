@@ -47,15 +47,7 @@ namespace BackendCustoms.CRON
             {
                 using (var scope = _scopeFactory.CreateScope())
                 {
-                    try
-                    {
-                        await DoWork(scope);
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.LogInformation("Error :" + ex.Message);
-                    }
-
+                    await DoWork(scope);
 
                 }
                 await Task.Delay(_scheduleInterval, stoppingToken);
@@ -69,35 +61,44 @@ namespace BackendCustoms.CRON
             var setting = await _sys.GetAsync();
             var readList = _fileReader.ReadAndMoveFiles(setting);
 
-            var _customDataService = scope.ServiceProvider.GetRequiredService<ICommonService<CustomsData>>();
-            await _customDataService.CreateList(readList);
-
-            var tokenRequest = new GetTokenRequest
+            if (readList.Count != 0)
             {
-                authUrl = setting.AuthorizationTokenURL_CEIR,
-                principal = setting.principal,
-                credentials = setting.credentials
-            };
-            var token = await _irdService.GetTokenAsync(tokenRequest);
-            foreach (var data in readList)
-            {
+                var _filterAndSaveService = scope.ServiceProvider.GetRequiredService<ICustomDataFilterAndSaveService>();
+                var sendList = await _filterAndSaveService.GetIrdToSendList(readList);
 
-                var confirmRequest = new ConfirmationRequest
+                if (sendList.Count != 0)
                 {
-                    body = new PaymentConfirmationRequest
+                    #region Token Request
+                    var tokenRequest = new GetTokenRequest
                     {
-                        CeirId = data.CEIRID,
-                        ReleaseOrderNumber = data.RONo,
-                        DateTime = data.RODate,
-                        SumCT = data.CT,
-                        SumCD = data.CD,
-                        SumAIT = data.AT,
-                        SumRF = data.RF
-                    },
-                    ApiURl = setting.PaymentConfirmationURL_CEIR,
-                    Token = token
-                };
-                await _irdService.PaymentConfirmation(confirmRequest);
+                        authUrl = setting.AuthorizationTokenURL_CEIR,
+                        principal = setting.principal,
+                        credentials = setting.credentials
+                    };
+                    var token = await _irdService.GetTokenAsync(tokenRequest);
+                    #endregion
+
+                    foreach (var data in sendList)
+                    {
+                        var confirmRequest = new ConfirmationRequest
+                        {
+                            body = new PaymentConfirmationRequest
+                            {
+                                CeirId = data.CEIRID,
+                                ReleaseOrderNumber = data.RONo,
+                                DateTime = data.RODate,
+                                SumCT = data.CT,
+                                SumCD = data.CD,
+                                SumAIT = data.AT,
+                                SumRF = data.RF
+                            },
+                            ApiURl = setting.PaymentConfirmationURL_CEIR,
+                            Token = token
+                        };
+                        var status = await _irdService.PaymentConfirmation(confirmRequest);
+                        await _filterAndSaveService.SaveAccordingToStatus(data, status);
+                    }
+                }
             }
         }
     }

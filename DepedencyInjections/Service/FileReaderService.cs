@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -41,10 +42,10 @@ namespace BackendCustoms.DepedencyInjections.Service
 
         private List<string> GetEligibleFiles(SystemSetting setting)
         {
-            return Directory.GetFiles(setting.sourceFolder, setting.toReadFileName, SearchOption.TopDirectoryOnly)
-            .Where(file => file.EndsWith(".edi", StringComparison.OrdinalIgnoreCase) &&
-                       file.StartsWith(setting.toReadFileNameStartWith, StringComparison.OrdinalIgnoreCase))
+            var temp = Directory.GetFiles(setting.sourceFolder, setting.toReadFileName + "*", SearchOption.TopDirectoryOnly)
+            .Where(file => file.EndsWith(".edi", StringComparison.OrdinalIgnoreCase))
             .ToList();
+            return temp;
         }
 
         private CustomsData ParseFileToCustomsData(string filePath, SystemSetting setting)
@@ -83,7 +84,7 @@ namespace BackendCustoms.DepedencyInjections.Service
         private DateTime? GetLineValueAsDate(string[] lines, string indexSetting)
         {
             var value = GetLineValue(lines, indexSetting);
-            if (DateTime.TryParse(value, out DateTime date))
+            if (DateTime.TryParseExact(value, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime date))
             {
                 return date;
             }

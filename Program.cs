@@ -54,6 +54,7 @@ internal class Program
         builder.Services.AddSingleton<IFileReaderService, FileReaderService>();
         builder.Services.AddScoped<IGetSystemSetting, GetSystemSetting>();
         builder.Services.AddSingleton<ICEIR_API_Service, CEIR_API_Service>();
+        builder.Services.AddScoped<ICustomDataFilterAndSaveService, CustomDataFilterAndSaveService>();
 
         builder.Services.AddHostedService<CronJobService>();
         var app = builder.Build();
