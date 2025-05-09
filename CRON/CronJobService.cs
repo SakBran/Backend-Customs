@@ -53,12 +53,15 @@ namespace BackendCustoms.CRON
             _logger.LogInformation("CronJobService is doing background work at: {time}", DateTimeOffset.Now);
             var _sys = scope.ServiceProvider.GetRequiredService<IGetSystemSetting>();
             var setting = await _sys.GetAsync();
+            //File Reading
             var readList = _fileReader.ReadAndMoveFiles(setting);
 
             if (readList.Count != 0)
             {
+                #region Get Send List From Read files to send IRD API
                 var _filterAndSaveService = scope.ServiceProvider.GetRequiredService<ICustomDataFilterAndSaveService>();
                 var sendList = await _filterAndSaveService.GetIrdToSendList(readList);
+                #endregion
 
                 if (sendList.Count != 0)
                 {
@@ -72,6 +75,7 @@ namespace BackendCustoms.CRON
                     var token = await _irdService.GetTokenAsync(tokenRequest);
                     #endregion
 
+                    #region Send to IRD and Update Success/Fail Status on CustomData
                     foreach (var data in sendList)
                     {
                         var confirmRequest = new ConfirmationRequest
@@ -92,6 +96,7 @@ namespace BackendCustoms.CRON
                         var status = await _irdService.PaymentConfirmation(confirmRequest);
                         await _filterAndSaveService.SaveAccordingToStatus(data, status);
                     }
+                    #endregion
                 }
             }
         }
