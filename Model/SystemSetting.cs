@@ -43,6 +43,9 @@ namespace BackendCustoms.Model
         public string RF { get; set; } // RF
         public string AuthorizationTokenURL_CEIR { get; set; } = string.Empty;
         public string PaymentConfirmationURL_CEIR { get; set; } = string.Empty;
+        public string principal { get; set; } = string.Empty;
+        public string credentials { get; set; } = string.Empty;
+
     }
 
 }

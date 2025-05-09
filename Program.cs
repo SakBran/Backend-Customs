@@ -1,6 +1,7 @@
 using API.DBContext;
 using API.Interface;
 using API.Service;
+using BackendCustoms.CRON;
 using BackendCustoms.DepedencyInjections.Interface;
 using BackendCustoms.DepedencyInjections.Service;
 using BackendCustoms.Model;
@@ -47,13 +48,14 @@ internal class Program
             };
         });
         builder.Services.AddMemoryCache();
+
         builder.Services.AddScoped<IJWTManagerService, JWTManagerService>();
         builder.Services.AddScoped(typeof(ICommonService<>), typeof(CommonService<>));
         builder.Services.AddSingleton<IFileReaderService, FileReaderService>();
         builder.Services.AddScoped<IGetSystemSetting, GetSystemSetting>();
         builder.Services.AddSingleton<ICEIR_API_Service, CEIR_API_Service>();
 
-
+        builder.Services.AddHostedService<CronJobService>();
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.

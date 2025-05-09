@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using API.DBContext;
 using API.Interface;
@@ -19,6 +20,13 @@ namespace API.Service
             await _context.Set<T>().AddAsync(entity);
             return await _context.SaveChangesAsync();
         }
+
+        public async Task<int> CreateList(List<T> entities)
+        {
+            await _context.Set<T>().AddRangeAsync(entities);
+            return await _context.SaveChangesAsync();
+        }
+
 
         public IQueryable<T> Retrieve => this._context.Set<T>();
 

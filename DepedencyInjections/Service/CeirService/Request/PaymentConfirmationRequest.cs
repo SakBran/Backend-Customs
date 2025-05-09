@@ -19,22 +19,22 @@ namespace BackendCustoms.DepedencyInjections.Service.CeirService.Request
 
 
         [JsonPropertyName("dateTime")]
-        public DateTime DateTime { get; set; }
+        public DateTime? DateTime { get; set; }
 
 
         [JsonPropertyName("SUM_CT")]
-        public double SumCT { get; set; } // Commercial Tax
+        public decimal? SumCT { get; set; } // Commercial Tax
 
 
         [JsonPropertyName("SUM_CD")]
-        public double SumCD { get; set; } // Customs Duty
+        public decimal? SumCD { get; set; } // Customs Duty
 
 
         [JsonPropertyName("SUM_AIT")]
-        public double SumAIT { get; set; } // Advanced Income Tax
+        public decimal? SumAIT { get; set; } // Advanced Income Tax
 
 
         [JsonPropertyName("SUM_RF")]
-        public double SumRF { get; set; } // Penalties
+        public decimal? SumRF { get; set; } // Penalties
     }
 }
