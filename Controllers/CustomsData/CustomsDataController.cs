@@ -23,10 +23,15 @@ namespace BackendCustoms.Controllers
             _context = context;
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("SentList")]
         public async Task<ActionResult<ApiResult<BackendCustoms.Model.CustomsData>>> SentList(
-                        SentListRequest filter,
+                        DateTime? RoDateFrom,
+                        DateTime? RoDateTo,
+                        DateTime? SentDateFrom,
+                        DateTime? SentDateTo,
+                        string? CeirId,
+                        string? RoNo,
                         int pageIndex = 0,
                         int pageSize = 10,
                         string sortColumn = null,
@@ -35,29 +40,29 @@ namespace BackendCustoms.Controllers
                         string filterQuery = null)
         {
             var query = _context.CustomsDatas.AsNoTracking().Where(x => x.Status == AppConfig.Sent);
-            if (filter.SentDateFrom != null)
+            if (SentDateFrom != null)
             {
-                query = query.Where(x => x.SentDatetime >= filter.SentDateFrom);
+                query = query.Where(x => x.SentDatetime >= SentDateFrom);
             }
-            if (filter.SentDateTo != null)
+            if (SentDateTo != null)
             {
-                query = query.Where(x => x.SentDatetime <= filter.SentDateTo);
+                query = query.Where(x => x.SentDatetime <= SentDateTo);
             }
-            if (filter.RoDateFrom != null)
+            if (RoDateFrom != null)
             {
-                query = query.Where(x => x.RODate >= filter.RoDateFrom);
+                query = query.Where(x => x.RODate >= RoDateFrom);
             }
-            if (filter.RoDateTo != null)
+            if (RoDateTo != null)
             {
-                query = query.Where(x => x.RODate <= filter.RoDateTo);
+                query = query.Where(x => x.RODate <= RoDateTo);
             }
-            if (!String.IsNullOrEmpty(filter.CeirId))
+            if (!String.IsNullOrEmpty(CeirId))
             {
-                query = query.Where(x => x.MACCSCEIRID == filter.CeirId);
+                query = query.Where(x => x.MACCSCEIRID == CeirId);
             }
-            if (!String.IsNullOrEmpty(filter.RoNo))
+            if (!String.IsNullOrEmpty(RoNo))
             {
-                query = query.Where(x => x.RONo == filter.RoNo);
+                query = query.Where(x => x.RONo == RoNo);
             }
 
             return await ApiResult<BackendCustoms.Model.CustomsData>.CreateAsync(
@@ -70,10 +75,15 @@ namespace BackendCustoms.Controllers
                     filterQuery);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("FailedList")]
         public async Task<ActionResult<ApiResult<BackendCustoms.Model.CustomsData>>> FailedList(
-                        SentListRequest filter,
+                         DateTime? RoDateFrom,
+                        DateTime? RoDateTo,
+                        DateTime? SentDateFrom,
+                        DateTime? SentDateTo,
+                        string? CeirId,
+                        string? RoNo,
                         int pageIndex = 0,
                         int pageSize = 10,
                         string sortColumn = null,
@@ -82,29 +92,29 @@ namespace BackendCustoms.Controllers
                         string filterQuery = null)
         {
             var query = _context.CustomsDatas.AsNoTracking().Where(x => x.Status == AppConfig.Failed);
-            if (filter.SentDateFrom != null)
+            if (SentDateFrom != null)
             {
-                query = query.Where(x => x.SentDatetime >= filter.SentDateFrom);
+                query = query.Where(x => x.SentDatetime >= SentDateFrom);
             }
-            if (filter.SentDateTo != null)
+            if (SentDateTo != null)
             {
-                query = query.Where(x => x.SentDatetime <= filter.SentDateTo);
+                query = query.Where(x => x.SentDatetime <= SentDateTo);
             }
-            if (filter.RoDateFrom != null)
+            if (RoDateFrom != null)
             {
-                query = query.Where(x => x.RODate >= filter.RoDateFrom);
+                query = query.Where(x => x.RODate >= RoDateFrom);
             }
-            if (filter.RoDateTo != null)
+            if (RoDateTo != null)
             {
-                query = query.Where(x => x.RODate <= filter.RoDateTo);
+                query = query.Where(x => x.RODate <= RoDateTo);
             }
-            if (!String.IsNullOrEmpty(filter.CeirId))
+            if (!String.IsNullOrEmpty(CeirId))
             {
-                query = query.Where(x => x.MACCSCEIRID == filter.CeirId);
+                query = query.Where(x => x.MACCSCEIRID == CeirId);
             }
-            if (!String.IsNullOrEmpty(filter.RoNo))
+            if (!String.IsNullOrEmpty(RoNo))
             {
-                query = query.Where(x => x.RONo == filter.RoNo);
+                query = query.Where(x => x.RONo == RoNo);
             }
 
             return await ApiResult<BackendCustoms.Model.CustomsData>.CreateAsync(
@@ -118,10 +128,13 @@ namespace BackendCustoms.Controllers
         }
 
 
-        [HttpPost]
+        [HttpGet]
         [Route("NotSentList")]
         public async Task<ActionResult<ApiResult<BackendCustoms.Model.CustomsData>>> NotSentList(
-                        SentListRequest filter,
+                        DateTime? RoDateFrom,
+                        DateTime? RoDateTo,
+                        string? CeirId,
+                        string? RoNo,
                         int pageIndex = 0,
                         int pageSize = 10,
                         string sortColumn = null,
@@ -131,21 +144,21 @@ namespace BackendCustoms.Controllers
         {
             var query = _context.CustomsDatas.AsNoTracking().Where(x => x.Status == AppConfig.NotSent);
 
-            if (filter.RoDateFrom != null)
+            if (RoDateFrom != null)
             {
-                query = query.Where(x => x.RODate >= filter.RoDateFrom);
+                query = query.Where(x => x.RODate >= RoDateFrom);
             }
-            if (filter.RoDateTo != null)
+            if (RoDateTo != null)
             {
-                query = query.Where(x => x.RODate <= filter.RoDateTo);
+                query = query.Where(x => x.RODate <= RoDateTo);
             }
-            if (!String.IsNullOrEmpty(filter.CeirId))
+            if (!String.IsNullOrEmpty(CeirId))
             {
-                query = query.Where(x => x.MACCSCEIRID == filter.CeirId);
+                query = query.Where(x => x.MACCSCEIRID == CeirId);
             }
-            if (!String.IsNullOrEmpty(filter.RoNo))
+            if (!String.IsNullOrEmpty(RoNo))
             {
-                query = query.Where(x => x.RONo == filter.RoNo);
+                query = query.Where(x => x.RONo == RoNo);
             }
 
             return await ApiResult<BackendCustoms.Model.CustomsData>.CreateAsync(
@@ -158,10 +171,13 @@ namespace BackendCustoms.Controllers
                     filterQuery);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("DuplicateList")]
         public async Task<ActionResult<ApiResult<BackendCustoms.Model.CustomsData>>> DuplicateList(
-                        SentListRequest filter,
+                         DateTime? RoDateFrom,
+                        DateTime? RoDateTo,
+                        string? CeirId,
+                        string? RoNo,
                         int pageIndex = 0,
                         int pageSize = 10,
                         string sortColumn = null,
@@ -171,21 +187,21 @@ namespace BackendCustoms.Controllers
         {
             var query = _context.CustomsDatas.AsNoTracking().Where(x => x.Status == AppConfig.Duplicate);
 
-            if (filter.RoDateFrom != null)
+            if (RoDateFrom != null)
             {
-                query = query.Where(x => x.RODate >= filter.RoDateFrom);
+                query = query.Where(x => x.RODate >= RoDateFrom);
             }
-            if (filter.RoDateTo != null)
+            if (RoDateTo != null)
             {
-                query = query.Where(x => x.RODate <= filter.RoDateTo);
+                query = query.Where(x => x.RODate <= RoDateTo);
             }
-            if (!String.IsNullOrEmpty(filter.CeirId))
+            if (!String.IsNullOrEmpty(CeirId))
             {
-                query = query.Where(x => x.MACCSCEIRID == filter.CeirId);
+                query = query.Where(x => x.MACCSCEIRID == CeirId);
             }
-            if (!String.IsNullOrEmpty(filter.RoNo))
+            if (!String.IsNullOrEmpty(RoNo))
             {
-                query = query.Where(x => x.RONo == filter.RoNo);
+                query = query.Where(x => x.RONo == RoNo);
             }
 
             return await ApiResult<BackendCustoms.Model.CustomsData>.CreateAsync(
