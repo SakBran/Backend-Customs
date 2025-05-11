@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using API.Interface;
@@ -65,6 +66,7 @@ namespace BackendCustoms.CRON
 
                 if (sendList.Count != 0)
                 {
+                    string? token = null;
                     try
                     {
                         #region Token Request
@@ -75,10 +77,21 @@ namespace BackendCustoms.CRON
                             credentials = setting.credentials
                         };
 
-                        var token = await _irdService.GetTokenAsync(tokenRequest);
+                        token = await _irdService.GetTokenAsync(tokenRequest);
                         #endregion
+                    }
+                    catch (Exception ex)
+                    {
+                        foreach (var data in sendList)
+                        {
+                            await _filterAndSaveService.SaveAccordingToStatus(data, HttpStatusCode.InternalServerError.ToString());
+                        }
+                        _logger.LogInformation("IRD API Request Error:" + ex.Message);
+                    }
 
-                        #region Send to IRD and Update Success/Fail Status on CustomData
+                    #region Send to IRD and Update Success/Fail Status on CustomData
+                    if (token != null)
+                    {
                         foreach (var data in sendList)
                         {
                             var confirmRequest = new ConfirmationRequest
@@ -99,14 +112,12 @@ namespace BackendCustoms.CRON
                             var status = await _irdService.PaymentConfirmation(confirmRequest);
                             await _filterAndSaveService.SaveAccordingToStatus(data, status);
                         }
-                        #endregion
                     }
-                    catch (Exception ex)
-                    {
-                        _logger.LogInformation("IRD API Request Error:" + ex.Message);
-                    }
+                    #endregion
                 }
+
             }
+
             else
             {
                 _logger.LogInformation("Nothing to read.");

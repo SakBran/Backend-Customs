@@ -40,12 +40,14 @@ namespace BackendCustoms.DepedencyInjections.Service
                     {
                         data.CEIRID = data.MaccsCEIRID;
                         data.Status = AppConfig.Duplicate;
+                        data.SentDatetime=DateTime.Now;
                         // Optionally log or handle duplicates
                     }
                 }
                 else
                 {
                     data.Status = AppConfig.NotSent;
+                    data.SentDatetime=DateTime.Now;
                 }
             }
             await _context.SaveChangesAsync();
@@ -59,6 +61,7 @@ namespace BackendCustoms.DepedencyInjections.Service
                 if (data != null)
                 {
                     data.Status = AppConfig.Sent;
+                    data.SentDatetime=DateTime.Now;
                 }
             }
             else
@@ -66,6 +69,7 @@ namespace BackendCustoms.DepedencyInjections.Service
                 if (data != null)
                 {
                     data.Status = AppConfig.Failed;
+                    data.SentDatetime=DateTime.Now;
                 }
             }
             await _context.SaveChangesAsync();
