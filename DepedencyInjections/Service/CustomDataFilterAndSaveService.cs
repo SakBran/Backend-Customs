@@ -25,20 +25,20 @@ namespace BackendCustoms.DepedencyInjections.Service
 
             foreach (var data in request)
             {
-                var isCEIR_Exist = await _context.ceiridFromIRDs.AnyAsync(x => x.CEIRID == data.MACCSCEIRID);
+                var isCEIR_Exist = await _context.ceiridFromIRDs.AnyAsync(x => x.CEIRID == data.MaccsCEIRID);
                 if (isCEIR_Exist)
                 {
-                    var isExist = await _context.CustomsDatas.AnyAsync(x => x.MACCSCEIRID == data.MACCSCEIRID);
+                    var isExist = await _context.CustomsDatas.AnyAsync(x => x.MaccsCEIRID == data.MaccsCEIRID);
 
                     if (!isExist)
                     {
-                        data.CEIRID = data.MACCSCEIRID;
+                        data.CEIRID = data.MaccsCEIRID;
                         await _context.CustomsDatas.AddAsync(data);
                         toSendList.Add(data); // Only add to toSendList if it's not a duplicate
                     }
                     else
                     {
-                        data.CEIRID = data.MACCSCEIRID;
+                        data.CEIRID = data.MaccsCEIRID;
                         data.Status = AppConfig.Duplicate;
                         // Optionally log or handle duplicates
                     }

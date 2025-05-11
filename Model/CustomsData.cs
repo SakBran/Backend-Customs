@@ -14,7 +14,8 @@ namespace BackendCustoms.Model
 
         public DateTime? ReceivedDatetime { get; set; }
         public string? CEIRID { get; set; }
-        public string? MACCSCEIRID { get; set; }
+        public string? OldCeirid { get; set; }
+        public string? MaccsCEIRID { get; set; }
         public string? RONo { get; set; }
         public DateTime? RODate { get; set; }
         public decimal? CD { get; set; }

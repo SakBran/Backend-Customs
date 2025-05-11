@@ -2440,7 +2440,7 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "System.Linq.Dynamic.Core/1.6.2": {
+      "System.Linq.Dynamic.Core/1.6.0.2": {
         "type": "package",
         "compile": {
           "lib/net8.0/System.Linq.Dynamic.Core.dll": {
@@ -7168,10 +7168,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "System.Linq.Dynamic.Core/1.6.2": {
-      "sha512": "piIcdelf4dGotuIjFlyu7JLIZkYTmYM0ZTLGpCcxs9iCJFflhJht0nchkIV+GS5wfA3OtC3QNjIcUqyOdBdOsA==",
+    "System.Linq.Dynamic.Core/1.6.0.2": {
+      "sha512": "rtfRierS5ZjG4xBfDKerRPImwDbav7q2hgf88jUZKfIjQb16PIQqzFCpPVWMb+7fS2ECXnPSmmBbssPz7WUg6g==",
       "type": "package",
-      "path": "system.linq.dynamic.core/1.6.2",
+      "path": "system.linq.dynamic.core/1.6.0.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -7226,7 +7226,7 @@
         "lib/uap10.0.10240/System.Linq.Dynamic.Core.pri",
         "lib/uap10.0.10240/System.Linq.Dynamic.Core.xml",
         "logo.png",
-        "system.linq.dynamic.core.1.6.2.nupkg.sha512",
+        "system.linq.dynamic.core.1.6.0.2.nupkg.sha512",
         "system.linq.dynamic.core.nuspec"
       ]
     },
@@ -7944,7 +7944,7 @@
       "Microsoft.VisualStudio.Azure.Containers.Tools.Targets >= 1.18.1",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 8.0.7",
       "Swashbuckle.AspNetCore >= 8.0.0",
-      "System.Linq.Dynamic.Core >= 1.6.2"
+      "System.Linq.Dynamic.Core >= 1.6.0.2"
     ]
   },
   "packageFolders": {
@@ -8032,7 +8032,7 @@
           },
           "System.Linq.Dynamic.Core": {
             "target": "Package",
-            "version": "[1.6.2, )"
+            "version": "[1.6.0.2, )"
           }
         },
         "imports": [

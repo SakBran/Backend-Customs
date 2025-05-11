@@ -54,7 +54,7 @@ namespace BackendCustoms.DepedencyInjections.Service
 
             return new CustomsData
             {
-                MACCSCEIRID = GetLineValue(lines, setting.CEIRID),
+                MaccsCEIRID = GetLineValue(lines, setting.CEIRID),
                 RONo = GetLineValue(lines, setting.RONo),
                 RODate = GetLineValueAsDate(lines, setting.RODate),
                 CD = GetLineValueDecimal(lines, setting.CD),

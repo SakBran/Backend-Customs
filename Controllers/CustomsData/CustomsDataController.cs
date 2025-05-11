@@ -34,10 +34,10 @@ namespace BackendCustoms.Controllers
                         string? RoNo,
                         int pageIndex = 0,
                         int pageSize = 10,
-                        string sortColumn = null,
-                        string sortOrder = null,
-                        string filterColumn = null,
-                        string filterQuery = null)
+                        string? sortColumn = null,
+                        string? sortOrder = null,
+                        string? filterColumn = null,
+                        string? filterQuery = null)
         {
             var query = _context.CustomsDatas.AsNoTracking().Where(x => x.Status == AppConfig.Sent);
             if (SentDateFrom != null)
@@ -58,7 +58,7 @@ namespace BackendCustoms.Controllers
             }
             if (!String.IsNullOrEmpty(CeirId))
             {
-                query = query.Where(x => x.MACCSCEIRID == CeirId);
+                query = query.Where(x => x.MaccsCEIRID == CeirId);
             }
             if (!String.IsNullOrEmpty(RoNo))
             {
@@ -86,10 +86,10 @@ namespace BackendCustoms.Controllers
                         string? RoNo,
                         int pageIndex = 0,
                         int pageSize = 10,
-                        string sortColumn = null,
-                        string sortOrder = null,
-                        string filterColumn = null,
-                        string filterQuery = null)
+                        string? sortColumn = null,
+                        string? sortOrder = null,
+                        string? filterColumn = null,
+                        string? filterQuery = null)
         {
             var query = _context.CustomsDatas.AsNoTracking().Where(x => x.Status == AppConfig.Failed);
             if (SentDateFrom != null)
@@ -110,7 +110,7 @@ namespace BackendCustoms.Controllers
             }
             if (!String.IsNullOrEmpty(CeirId))
             {
-                query = query.Where(x => x.MACCSCEIRID == CeirId);
+                query = query.Where(x => x.MaccsCEIRID == CeirId);
             }
             if (!String.IsNullOrEmpty(RoNo))
             {
@@ -137,10 +137,10 @@ namespace BackendCustoms.Controllers
                         string? RoNo,
                         int pageIndex = 0,
                         int pageSize = 10,
-                        string sortColumn = null,
-                        string sortOrder = null,
-                        string filterColumn = null,
-                        string filterQuery = null)
+                        string? sortColumn = null,
+                        string? sortOrder = null,
+                        string? filterColumn = null,
+                        string? filterQuery = null)
         {
             var query = _context.CustomsDatas.AsNoTracking().Where(x => x.Status == AppConfig.NotSent);
 
@@ -154,7 +154,7 @@ namespace BackendCustoms.Controllers
             }
             if (!String.IsNullOrEmpty(CeirId))
             {
-                query = query.Where(x => x.MACCSCEIRID == CeirId);
+                query = query.Where(x => x.MaccsCEIRID == CeirId);
             }
             if (!String.IsNullOrEmpty(RoNo))
             {
@@ -180,10 +180,10 @@ namespace BackendCustoms.Controllers
                         string? RoNo,
                         int pageIndex = 0,
                         int pageSize = 10,
-                        string sortColumn = null,
-                        string sortOrder = null,
-                        string filterColumn = null,
-                        string filterQuery = null)
+                        string? sortColumn = null,
+                        string? sortOrder = null,
+                        string? filterColumn = null,
+                        string? filterQuery = null)
         {
             var query = _context.CustomsDatas.AsNoTracking().Where(x => x.Status == AppConfig.Duplicate);
 
@@ -197,7 +197,7 @@ namespace BackendCustoms.Controllers
             }
             if (!String.IsNullOrEmpty(CeirId))
             {
-                query = query.Where(x => x.MACCSCEIRID == CeirId);
+                query = query.Where(x => x.MaccsCEIRID == CeirId);
             }
             if (!String.IsNullOrEmpty(RoNo))
             {

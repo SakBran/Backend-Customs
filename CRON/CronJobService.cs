@@ -98,6 +98,8 @@ namespace BackendCustoms.CRON
                     }
                     #endregion
                 }
+            }else{
+                 _logger.LogInformation("Nothing to read.");
             }
         }
     }

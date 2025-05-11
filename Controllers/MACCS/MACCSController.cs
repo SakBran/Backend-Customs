@@ -37,6 +37,13 @@ namespace BackendCustoms.Controllers.IRD
                     SendDatetime = null
                 };
                 await _context.ceiridFromIRDs.AddAsync(data);
+                var _customQuery= _context.CustomsDatas.Where(x=>x.MaccsCEIRID==request.ceirId);
+                if(await _customQuery.AnyAsync()){
+                    var temp=await _customQuery.FirstOrDefaultAsync();
+                    if(temp!=null){
+                        temp.CEIRID=request.ceirId;
+                    }
+                }
                 await _context.SaveChangesAsync();
                 return Ok();
             }
