@@ -70,3 +70,5 @@ obj/project.assets.json
 obj/Debug/net6.0/API.GeneratedMSBuildEditorConfig.editorconfig
 obj/project.assets.json
 obj/API.csproj.nuget.dgspec.json
+obj/API.csproj.nuget.dgspec.json
+obj/project.assets.json
