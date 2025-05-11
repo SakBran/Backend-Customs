@@ -56,12 +56,18 @@ namespace BackendCustoms.DepedencyInjections.Service
         public async Task SaveAccordingToStatus(CustomsData request, string status)
         {
             var data = await _context.CustomsDatas.Where(x => x.id == request.id).FirstOrDefaultAsync();
+            
             if (status == HttpStatusCode.OK.ToString())
             {
                 if (data != null)
                 {
                     data.Status = AppConfig.Sent;
                     data.SentDatetime=DateTime.Now;
+                    var ceirid=await _context.ceiridFromIRDs.Where(x=>x.CEIRID==data.MaccsCEIRID).FirstOrDefaultAsync();
+                    if(ceirid!=null){
+                        ceirid.IsSent=true;
+                        ceirid.SendDatetime=data.SentDatetime;
+                    }
                 }
             }
             else
