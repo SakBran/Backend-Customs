@@ -48,6 +48,7 @@ internal class Program
             };
         });
         builder.Services.AddMemoryCache();
+        builder.Services.AddHttpContextAccessor();
 
         builder.Services.AddScoped<IJWTManagerService, JWTManagerService>();
         builder.Services.AddScoped(typeof(ICommonService<>), typeof(CommonService<>));
@@ -56,6 +57,8 @@ internal class Program
         builder.Services.AddSingleton<ICEIR_API_Service, CEIR_API_Service>();
         builder.Services.AddScoped<ICustomDataFilterAndSaveService, CustomDataFilterAndSaveService>();
         builder.Services.AddScoped(typeof(IReportFilterQueryService<>), typeof(ReportFilterQueryService<>));
+        builder.Services.AddSingleton<IGetaccessTokenService, GetAccessTokenService>();
+
 
         builder.Services.AddHostedService<CronJobService>();
         var app = builder.Build();

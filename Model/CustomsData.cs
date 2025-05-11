@@ -25,6 +25,7 @@ namespace BackendCustoms.Model
         public DateTime? SentDatetime { get; set; }
         public string? Remark { get; set; }
         public string? EditBy { get; set; }
+        public string? EditById { get; set; }
         public string? Status { get; set; }
     }
 }

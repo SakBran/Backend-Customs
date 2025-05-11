@@ -1,26 +1,34 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using API.DBContext;
 using API.Model;
 using BackendCustoms.Controllers.CustomsData.Request;
 using BackendCustoms.DepedencyInjections.Interface;
 using BackendCustoms.Model;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BackendCustoms.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class CustomsDataController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IGetaccessTokenService _getToken;
 
-        public CustomsDataController(ApplicationDbContext context)
+        public CustomsDataController(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor, IGetaccessTokenService getToken)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
+            _getToken = getToken;
         }
 
         [HttpGet]
@@ -212,6 +220,34 @@ namespace BackendCustoms.Controllers
                     sortOrder,
                     filterColumn,
                     filterQuery);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> EditCeirid(string id, EditCeiridRequest request)
+        {
+
+            var temp = await _context.CustomsDatas.Where(x => x.id == id).FirstOrDefaultAsync();
+            if (temp != null)
+            {
+                var user = new User();
+                var token = await _context.TokenModels.Where(x => x.Token == _getToken.GetaccessTokenAsync()).FirstOrDefaultAsync();
+                if (token != null)
+                {
+                    user = await _context.Users.Where(x => x.Id == token.UserId).FirstOrDefaultAsync();
+                }
+
+                temp.CEIRID = request.ceirId;
+                temp.MaccsCEIRID = temp.CEIRID;
+                temp.Remark = request.remark;
+                temp.EditBy = user?.FullName;
+                temp.EditById = user?.Id;
+                await _context.SaveChangesAsync();
+                return Ok(temp);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
     }
 }
