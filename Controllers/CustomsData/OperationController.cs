@@ -237,12 +237,8 @@ namespace BackendCustoms.Controllers
             var temp = await _context.CustomsDatas.Where(x => x.id == id).FirstOrDefaultAsync();
             if (temp != null)
             {
-                var user = new User();
-                var token = await _context.TokenModels.Where(x => x.Token == _getToken.GetaccessTokenAsync()).FirstOrDefaultAsync();
-                if (token != null)
-                {
-                    user = await _context.Users.Where(x => x.Id == token.UserId).FirstOrDefaultAsync();
-                }
+                // Get User from Token
+                var user = await GetUserFromTokenAsync();
 
                 temp.CEIRID = request.ceirId;
                 temp.MaccsCEIRID = temp.CEIRID;
