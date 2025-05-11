@@ -16,9 +16,9 @@ namespace BackendCustoms.DepedencyInjections.Service
                 foreach (var p in typeof(T).GetProperties())
                 {
                     string propertyName = p.Name;
-                    var propertyType = typeof(T).GetProperty(propertyName).PropertyType.ToString();
-                    System.Reflection.PropertyInfo prop = typeof(T).GetProperty(propertyName);
-                    object value = prop.GetValue(filter);
+                    var propertyType = typeof(T).GetProperty(propertyName)?.PropertyType.ToString();
+                    System.Reflection.PropertyInfo? prop = typeof(T).GetProperty(propertyName);
+                    object? value = prop?.GetValue(filter);
 
 
                     if (propertyType == "System.String")
