@@ -65,41 +65,51 @@ namespace BackendCustoms.CRON
 
                 if (sendList.Count != 0)
                 {
-                    #region Token Request
-                    var tokenRequest = new GetTokenRequest
+                    try
                     {
-                        authUrl = setting.AuthorizationTokenURL_CEIR,
-                        principal = setting.principal,
-                        credentials = setting.credentials
-                    };
-                    var token = await _irdService.GetTokenAsync(tokenRequest);
-                    #endregion
-
-                    #region Send to IRD and Update Success/Fail Status on CustomData
-                    foreach (var data in sendList)
-                    {
-                        var confirmRequest = new ConfirmationRequest
+                        #region Token Request
+                        var tokenRequest = new GetTokenRequest
                         {
-                            body = new PaymentConfirmationRequest
-                            {
-                                CeirId = data.CEIRID,
-                                ReleaseOrderNumber = data.RONo,
-                                DateTime = data.RODate,
-                                SumCT = data.CT,
-                                SumCD = data.CD,
-                                SumAIT = data.AT,
-                                SumRF = data.RF
-                            },
-                            ApiURl = setting.PaymentConfirmationURL_CEIR,
-                            Token = token
+                            authUrl = setting.AuthorizationTokenURL_CEIR,
+                            principal = setting.principal,
+                            credentials = setting.credentials
                         };
-                        var status = await _irdService.PaymentConfirmation(confirmRequest);
-                        await _filterAndSaveService.SaveAccordingToStatus(data, status);
+
+                        var token = await _irdService.GetTokenAsync(tokenRequest);
+                        #endregion
+
+                        #region Send to IRD and Update Success/Fail Status on CustomData
+                        foreach (var data in sendList)
+                        {
+                            var confirmRequest = new ConfirmationRequest
+                            {
+                                body = new PaymentConfirmationRequest
+                                {
+                                    CeirId = data.CEIRID,
+                                    ReleaseOrderNumber = data.RONo,
+                                    DateTime = data.RODate,
+                                    SumCT = data.CT,
+                                    SumCD = data.CD,
+                                    SumAIT = data.AT,
+                                    SumRF = data.RF
+                                },
+                                ApiURl = setting.PaymentConfirmationURL_CEIR,
+                                Token = token
+                            };
+                            var status = await _irdService.PaymentConfirmation(confirmRequest);
+                            await _filterAndSaveService.SaveAccordingToStatus(data, status);
+                        }
+                        #endregion
                     }
-                    #endregion
+                    catch (Exception ex)
+                    {
+                        _logger.LogInformation("IRD API Request Error:" + ex.Message);
+                    }
                 }
-            }else{
-                 _logger.LogInformation("Nothing to read.");
+            }
+            else
+            {
+                _logger.LogInformation("Nothing to read.");
             }
         }
     }
