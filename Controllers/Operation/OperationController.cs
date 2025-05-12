@@ -239,6 +239,16 @@ namespace BackendCustoms.Controllers
             {
                 // Get User from Token
                 var user = await GetUserFromTokenAsync();
+                #region User Activity Record
+                var activity = new UserLog();
+                activity.Description = AppConfig.ResendDescription;
+                activity.UserId = user?.Id;
+                activity.FullName = user?.FullName;
+                activity.LogDatetime = DateTime.Now;
+                activity.OldData = temp.MaccsCEIRID;
+                activity.NewData = request.ceirId;
+                await _context.UserLogs.AddAsync(activity);
+                #endregion
 
                 temp.CEIRID = request.ceirId;
                 temp.MaccsCEIRID = temp.CEIRID;
@@ -264,6 +274,18 @@ namespace BackendCustoms.Controllers
 
             // Get User from Token
             var user = await GetUserFromTokenAsync();
+            #region User Activity Record
+            var activity = new UserLog();
+            activity.Description = AppConfig.ResendDescription;
+            activity.UserId = user?.Id;
+            activity.FullName = user?.FullName;
+            activity.LogDatetime = DateTime.Now;
+            activity.OldData = data.MaccsCEIRID;
+            //activity.NewData = data.MaccsCEIRID;
+            await _context.UserLogs.AddAsync(activity);
+            await _context.SaveChangesAsync();
+            #endregion
+
 
             // Get Token from External Service
             var token = await GetCeirTokenAsync(data);
@@ -276,6 +298,7 @@ namespace BackendCustoms.Controllers
 
             // Update sent timestamp
             data.SentDatetime = DateTime.Now;
+
             await _context.SaveChangesAsync();
 
             if (status == HttpStatusCode.OK.ToString())

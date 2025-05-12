@@ -20,6 +20,7 @@ namespace API.DBContext
         public DbSet<CustomsData> CustomsDatas { get; set; }
         public DbSet<CeiridFromIRD> ceiridFromIRDs { get; set; }
         public DbSet<CeiridFromIRD_DeletedLog> ceiridFromIRD_DeletedLogs { get; set; }
+        public DbSet<UserLog> UserLogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

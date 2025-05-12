@@ -4,6 +4,7 @@ using API.DBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250512145252_userlogs")]
+    partial class userlogs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -262,8 +265,8 @@ namespace API.Migrations
                     b.Property<string>("Latidute")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("LogDatetime")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("LogDatetime")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Longitude")
                         .HasColumnType("nvarchar(max)");
