@@ -28,9 +28,10 @@ namespace BackendCustoms.DepedencyInjections.Service
                 var isCEIR_Exist = await _context.ceiridFromIRDs.AnyAsync(x => x.CEIRID == data.MaccsCEIRID);
                 if (isCEIR_Exist)
                 {
-                    var isExist = await _context.CustomsDatas.AnyAsync(x => x.MaccsCEIRID == data.MaccsCEIRID);
+                    var sentCeirdFromIRD = await _context.ceiridFromIRDs.Where(x => x.CEIRID == data.MaccsCEIRID && x.IsSent == true).Select(x => x.CEIRID).ToListAsync();
+                    var isDuplicate = await _context.CustomsDatas.AnyAsync(x => x.CEIRID == data.MaccsCEIRID && sentCeirdFromIRD.Contains(x.CEIRID));
 
-                    if (!isExist)
+                    if (!isDuplicate)
                     {
                         data.CEIRID = data.MaccsCEIRID;
                         await _context.CustomsDatas.AddAsync(data);
@@ -40,14 +41,14 @@ namespace BackendCustoms.DepedencyInjections.Service
                     {
                         data.CEIRID = data.MaccsCEIRID;
                         data.Status = AppConfig.Duplicate;
-                        data.SentDatetime=DateTime.Now;
+                        data.SentDatetime = DateTime.Now;
                         // Optionally log or handle duplicates
                     }
                 }
                 else
                 {
                     data.Status = AppConfig.NotSent;
-                    data.SentDatetime=DateTime.Now;
+                    data.SentDatetime = DateTime.Now;
                 }
             }
             await _context.SaveChangesAsync();
@@ -56,17 +57,18 @@ namespace BackendCustoms.DepedencyInjections.Service
         public async Task SaveAccordingToStatus(CustomsData request, string status)
         {
             var data = await _context.CustomsDatas.Where(x => x.id == request.id).FirstOrDefaultAsync();
-            
+
             if (status == HttpStatusCode.OK.ToString())
             {
                 if (data != null)
                 {
                     data.Status = AppConfig.Sent;
-                    data.SentDatetime=DateTime.Now;
-                    var ceirid=await _context.ceiridFromIRDs.Where(x=>x.CEIRID==data.MaccsCEIRID).FirstOrDefaultAsync();
-                    if(ceirid!=null){
-                        ceirid.IsSent=true;
-                        ceirid.SendDatetime=data.SentDatetime;
+                    data.SentDatetime = DateTime.Now;
+                    var ceirid = await _context.ceiridFromIRDs.Where(x => x.CEIRID == data.MaccsCEIRID).FirstOrDefaultAsync();
+                    if (ceirid != null)
+                    {
+                        ceirid.IsSent = true;
+                        ceirid.SendDatetime = data.SentDatetime;
                     }
                 }
             }
@@ -75,7 +77,7 @@ namespace BackendCustoms.DepedencyInjections.Service
                 if (data != null)
                 {
                     data.Status = AppConfig.Failed;
-                    data.SentDatetime=DateTime.Now;
+                    data.SentDatetime = DateTime.Now;
                 }
             }
             await _context.SaveChangesAsync();

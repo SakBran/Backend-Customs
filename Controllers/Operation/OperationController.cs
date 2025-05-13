@@ -251,7 +251,7 @@ namespace BackendCustoms.Controllers
                 #endregion
 
                 temp.CEIRID = request.ceirId;
-                temp.MaccsCEIRID = temp.CEIRID;
+                temp.EditCeirid = temp.CEIRID;
                 temp.Remark = request.remark;
                 temp.EditBy = user?.FullName;
                 temp.EditById = user?.Id;
@@ -271,7 +271,14 @@ namespace BackendCustoms.Controllers
             var data = await _context.CustomsDatas.FirstOrDefaultAsync(x => x.id == request.id);
             if (data == null)
                 return NotFound();
-
+            if (data.CEIRID != null)
+            {
+                var isSent = await _context.ceiridFromIRDs.Where(x => x.CEIRID == data.CEIRID && x.IsSent == true).AnyAsync();
+                if (isSent)
+                {
+                    return BadRequest("Fail to send becuase of duplicate case");
+                }
+            }
             // Get User from Token
             var user = await GetUserFromTokenAsync();
             #region User Activity Record

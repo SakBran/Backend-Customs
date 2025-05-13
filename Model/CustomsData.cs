@@ -27,5 +27,6 @@ namespace BackendCustoms.Model
         public string? EditBy { get; set; }
         public string? EditById { get; set; }
         public string? Status { get; set; }
+        public string? EditCeirid { get; set; }
     }
 }
