@@ -241,11 +241,11 @@ namespace BackendCustoms.Controllers
                 var user = await GetUserFromTokenAsync();
                 #region User Activity Record
                 var activity = new UserLog();
-                activity.Description = AppConfig.ResendDescription;
+                activity.Description = AppConfig.EditDescription;
                 activity.UserId = user?.Id;
                 activity.FullName = user?.FullName;
                 activity.LogDatetime = DateTime.Now;
-                activity.OldData = temp.MaccsCEIRID;
+                activity.OldData = temp.CEIRID;
                 activity.NewData = request.ceirId;
                 await _context.UserLogs.AddAsync(activity);
                 #endregion
