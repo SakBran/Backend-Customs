@@ -240,6 +240,7 @@ namespace BackendCustoms.Controllers
                 // Get User from Token
                 var user = await GetUserFromTokenAsync();
                 #region User Activity Record
+
                 var activity = new UserLog();
                 activity.Description = AppConfig.EditDescription;
                 activity.UserId = user?.Id;
@@ -282,8 +283,9 @@ namespace BackendCustoms.Controllers
             // Get User from Token
             var user = await GetUserFromTokenAsync();
             #region User Activity Record
+            var isExist = await _context.UserLogs.Where(x => x.OldData == data.CEIRID && x.Description == AppConfig.SendDescription).AnyAsync();
             var activity = new UserLog();
-            activity.Description = AppConfig.ResendDescription;
+            activity.Description = isExist ? AppConfig.ResendDescription : AppConfig.SendDescription;
             activity.UserId = user?.Id;
             activity.FullName = user?.FullName;
             activity.LogDatetime = DateTime.Now;
