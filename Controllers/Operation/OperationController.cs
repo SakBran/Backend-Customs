@@ -256,6 +256,7 @@ namespace BackendCustoms.Controllers
                 temp.Remark = request.remark;
                 temp.EditBy = user?.FullName;
                 temp.EditById = user?.Id;
+                temp.EditDatetime = DateTime.Now;
                 await _context.SaveChangesAsync();
                 return Ok(temp);
             }
@@ -306,7 +307,10 @@ namespace BackendCustoms.Controllers
             await _filterAndSaveService.SaveAccordingToStatus(data, status);
 
             // Update sent timestamp
+            data.SendBy = user?.FullName;
+            data.SendById = user?.Id;
             data.SentDatetime = DateTime.Now;
+
 
             await _context.SaveChangesAsync();
 

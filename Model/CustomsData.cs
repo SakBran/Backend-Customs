@@ -22,10 +22,13 @@ namespace BackendCustoms.Model
         public decimal? CT { get; set; }
         public decimal? AT { get; set; }
         public decimal? RF { get; set; }
+        public string? SendBy { get; set; }
+        public string? SendById { get; set; }
         public DateTime? SentDatetime { get; set; }
         public string? Remark { get; set; }
         public string? EditBy { get; set; }
         public string? EditById { get; set; }
+        public DateTime? EditDatetime { get; set; }
         public string? Status { get; set; }
         public string? EditCeirid { get; set; }
     }

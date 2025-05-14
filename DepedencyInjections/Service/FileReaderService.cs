@@ -48,21 +48,53 @@ namespace BackendCustoms.DepedencyInjections.Service
             return temp;
         }
 
-        private CustomsData ParseFileToCustomsData(string filePath, SystemSetting setting)
+        private CustomsData? ParseFileToCustomsData(string filePath, SystemSetting setting)
         {
             var lines = File.ReadAllLines(filePath);
-
-            return new CustomsData
+            var CEIR = GetValueBetweenLine(lines, 59, 82, 1, "CEIR");
+            if (CEIR == "")
             {
-                MaccsCEIRID = GetLineValue(lines, setting.CEIRID),
-                RONo = GetLineValue(lines, setting.RONo),
-                RODate = GetLineValueAsDate(lines, setting.RODate),
-                CD = GetLineValueDecimal(lines, setting.CD),
-                CT = GetLineValueDecimal(lines, setting.CT),
-                AT = GetLineValueDecimal(lines, setting.AT),
-                RF = GetLineValueDecimal(lines, setting.RF),
-                ReceivedDatetime = DateTime.Now,
-            };
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                }
+                return null;
+            }
+            else
+            {
+                return new CustomsData
+                {
+                    MaccsCEIRID = GetValueBetweenLine(lines, 59, 82, 1, "CEIR"),
+                    RONo = GetLineValue(lines, "9"),
+                    RODate = GetLineValueAsDate(lines, "210"),
+                    CD = Convert.ToDecimal(GetValueBetweenLine(lines, 112, 151, 2, "CD")),
+                    CT = Convert.ToDecimal(GetValueBetweenLine(lines, 112, 151, 2, "CT")),
+                    AT = Convert.ToDecimal(GetValueBetweenLine(lines, 112, 151, 2, "AT")),
+                    RF = Convert.ToDecimal(GetValueBetweenLine(lines, 112, 151, 2, "RF")),
+                    ReceivedDatetime = DateTime.Now,
+                };
+            }
+
+        }
+
+        private string GetValueBetweenLine(string[] lines, int startLine, int endLine, int plusLine, string key)
+        {
+            string CEIR = "";
+
+
+            for (int i = startLine - 1; i < endLine && i < lines.Length; i++) // Adjust for zero-based index
+            {
+                if (lines[i].Contains(key)) // Check if "CEIR" exists in the line
+                {
+                    int valueLine = i + plusLine; // Get the next line number
+                    if (valueLine < lines.Length) // Ensure it's within bounds
+                    {
+                        CEIR = lines[valueLine].Trim(); // Extract and clean the value
+                    }
+                    break; // Stop after the first occurrence
+                }
+            }
+            return CEIR;
         }
         private string GetLineValue(string[] lines, string indexSetting)
         {
