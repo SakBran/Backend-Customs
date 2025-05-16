@@ -76,7 +76,7 @@ internal class Program
             app.UseHsts();
         }
 
-        app.UseHttpsRedirection();
+        // app.UseHttpsRedirection();
         #region Cors
         app.UseCors(
                       builder =>
@@ -114,7 +114,7 @@ internal class Program
                   );
         #endregion
 
-        app.UseHttpsRedirection();
+        // app.UseHttpsRedirection();
         app.UseRouting();
         app.UseForwardedHeaders(new ForwardedHeadersOptions
         {
