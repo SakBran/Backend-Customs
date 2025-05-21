@@ -235,6 +235,7 @@ namespace BackendCustoms.Controllers
         {
 
             var temp = await _context.CustomsDatas.Where(x => x.id == id).FirstOrDefaultAsync();
+            var isCeirIdExist = await _context.ceiridFromIRDs.Where(x => x.CEIRID == request.ceirId).AnyAsync();
             if (temp != null)
             {
                 // Get User from Token
@@ -250,9 +251,16 @@ namespace BackendCustoms.Controllers
                 activity.NewData = request.ceirId;
                 await _context.UserLogs.AddAsync(activity);
                 #endregion
+                if (isCeirIdExist)
+                {
+                    temp.CEIRID = request.ceirId;
+                }
+                else
+                {
+                    temp.CEIRID = "";
+                }
 
-                temp.CEIRID = request.ceirId;
-                temp.EditCeirid = temp.CEIRID;
+                temp.EditCeirid = request.ceirId;
                 temp.Remark = request.remark;
                 temp.EditBy = user?.FullName;
                 temp.EditById = user?.Id;
@@ -271,17 +279,6 @@ namespace BackendCustoms.Controllers
         public async Task<IActionResult> Send(SendRequest request)
         {
             var data = await _context.CustomsDatas.FirstOrDefaultAsync(x => x.id == request.id);
-            if (data == null)
-                return NotFound();
-            if (data.CEIRID != null)
-            {
-                var isSent = await _context.ceiridFromIRDs.Where(x => x.CEIRID == data.CEIRID && x.IsSent == true).AnyAsync();
-                if (isSent)
-                {
-                    return BadRequest("Fail to send becuase of duplicate case");
-                }
-            }
-            // Get User from Token
             var user = await GetUserFromTokenAsync();
             #region User Activity Record
             var isExist = await _context.UserLogs.Where(x => x.OldData == data.CEIRID && x.Description == AppConfig.SendDescription).AnyAsync();
@@ -295,12 +292,27 @@ namespace BackendCustoms.Controllers
             await _context.UserLogs.AddAsync(activity);
             await _context.SaveChangesAsync();
             #endregion
+            if (data == null)
+                return NotFound();
+            if (data.CEIRID != null)
+            {
+                var isSent = await _context.ceiridFromIRDs.Where(x => x.CEIRID == data.CEIRID && x.IsSent == true).AnyAsync();
+                data.Status = AppConfig.Duplicate;
+                await _context.SaveChangesAsync();
+                if (isSent)
+                {
+                    return BadRequest("Fail to send becuase of duplicate case");
+                }
+            }
+            // Get User from Token
+
 
 
             // Get Token from External Service
             var token = await GetCeirTokenAsync(data);
             if (token == null)
                 return BadRequest("Failed to acquire token.");
+
 
             // Send Confirmation to IRD
             var status = await SendPaymentConfirmationAsync(data, token);
