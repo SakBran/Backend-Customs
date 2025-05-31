@@ -53,10 +53,10 @@ namespace API.Model
             IQueryable<T> source,
             int pageIndex,
             int pageSize,
-            string? sortColumn = null,
-            string? sortOrder = null,
-            string? filterColumn = null,
-            string? filterQuery = null)
+            string sortColumn = null,
+            string sortOrder = null,
+            string filterColumn = null,
+            string filterQuery = null)
         {
             if (!string.IsNullOrEmpty(filterColumn)
                 && !string.IsNullOrEmpty(filterQuery)
@@ -96,7 +96,7 @@ namespace API.Model
             }
             var type = source.GetType();
             var hasAsync = type.GetMethod("CountAsync") != null;
-            int count;
+            var count = 0;
             if (hasAsync)
             {
                 count = await source.CountAsync();
@@ -134,33 +134,26 @@ namespace API.Model
             //             }
             // #endif
 
+            var data = new List<T>();
             type = source.GetType();
             hasAsync = type.GetMethod("ToListAsync") != null;
-            List<T>? data;
             if (hasAsync)
             {
-                if (source != null)
-                {
-                    data = await source.ToListAsync();
-                }
-                else
-                {
-                    data = new List<T>();
-                }
+                data = await source?.ToListAsync();
             }
             else
             {
                 data = source?.ToList();
             }
             return new ApiResult<T>(
-                data ?? new List<T>(),
+                data,
                 count,
                 pageIndex,
                 pageSize,
-                sortColumn ?? "",
-                sortOrder ?? "",
-                filterColumn ?? "",
-                filterQuery ?? "");
+                sortColumn,
+                sortOrder,
+                filterColumn,
+                filterQuery);
         }
 
         /// <summary>
