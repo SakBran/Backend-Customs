@@ -49,6 +49,7 @@ namespace BackendCustoms.DepedencyInjections.Service
                 {
                     data.Status = AppConfig.NotSent;
                     data.SentDatetime = DateTime.Now;
+                    await _context.CustomsDatas.AddAsync(data);
                 }
             }
             await _context.SaveChangesAsync();
