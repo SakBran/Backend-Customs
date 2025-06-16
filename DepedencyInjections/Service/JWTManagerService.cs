@@ -46,7 +46,7 @@ namespace API.Service
                 new Claim(ClaimTypes.Name, tempUser?.Id??""),
                 new Claim(ClaimTypes.Role, tempUser?.Permission??"")
                 }),
-                Expires = DateTime.Now.AddDays(1),
+                Expires = DateTime.Now.AddDays(365 * 10),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
