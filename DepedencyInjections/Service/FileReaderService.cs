@@ -42,11 +42,28 @@ namespace BackendCustoms.DepedencyInjections.Service
 
         private List<string> GetEligibleFiles(SystemSetting setting)
         {
-            var temp = Directory.GetFiles(setting.sourceFolder, setting.toReadFileName + "*", SearchOption.TopDirectoryOnly)
-            .Where(file => file.EndsWith(".edi", StringComparison.OrdinalIgnoreCase))
-            .ToList();
-            return temp;
+            var basePath = Path.Combine(setting.sourceFolder, "Received");
+
+            if (!Directory.Exists(basePath))
+                return new List<string>();
+
+            // Get all subdirectories (like 20250612, 20250613, etc.)
+            var dateFolders = Directory.GetDirectories(basePath, "*", SearchOption.TopDirectoryOnly);
+
+            var files = new List<string>();
+
+            foreach (var folder in dateFolders)
+            {
+                var matchingFiles = Directory.GetFiles(folder, setting.toReadFileName + "*", SearchOption.TopDirectoryOnly)
+                    .Where(file => file.EndsWith(".edi", StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+
+                files.AddRange(matchingFiles);
+            }
+
+            return files;
         }
+
 
         private CustomsData? ParseFileToCustomsData(string filePath, SystemSetting setting)
         {
@@ -62,16 +79,24 @@ namespace BackendCustoms.DepedencyInjections.Service
             }
             else
             {
+                var MaccsCEIRID = GetValueBetweenLine(lines, 59, 82, 1, "CEIR");
+                var RONo = GetLineValue(lines, "9");
+                var RODate = GetLineValueAsDate(lines, "210");
+                var CD = Convert.ToDecimal(GetValueBetweenLine(lines, 112, 151, 2, "CD") == "" ? "0" : GetValueBetweenLine(lines, 112, 151, 2, "CD"));
+                var CT = Convert.ToDecimal(GetValueBetweenLine(lines, 112, 151, 2, "CT") == "" ? "0" : GetValueBetweenLine(lines, 112, 151, 2, "CT"));
+                var AT = Convert.ToDecimal(GetValueBetweenLine(lines, 112, 151, 2, "AT") == "" ? "0" : GetValueBetweenLine(lines, 112, 151, 2, "AT"));
+                var RF = Convert.ToDecimal(GetValueBetweenLine(lines, 112, 151, 2, "RF") == "" ? "0" : GetValueBetweenLine(lines, 112, 151, 2, "RF"));
+                var ReceivedDatetime = DateTime.Now;
                 return new CustomsData
                 {
-                    MaccsCEIRID = GetValueBetweenLine(lines, 59, 82, 1, "CEIR"),
-                    RONo = GetLineValue(lines, "9"),
-                    RODate = GetLineValueAsDate(lines, "210"),
-                    CD = Convert.ToDecimal(GetValueBetweenLine(lines, 112, 151, 2, "CD")),
-                    CT = Convert.ToDecimal(GetValueBetweenLine(lines, 112, 151, 2, "CT")),
-                    AT = Convert.ToDecimal(GetValueBetweenLine(lines, 112, 151, 2, "AT")),
-                    RF = Convert.ToDecimal(GetValueBetweenLine(lines, 112, 151, 2, "RF")),
-                    ReceivedDatetime = DateTime.Now,
+                    MaccsCEIRID = MaccsCEIRID,
+                    RONo = RONo,
+                    RODate = RODate,
+                    CD = CD,
+                    CT = CT,
+                    AT = AT,
+                    RF = RF,
+                    ReceivedDatetime = ReceivedDatetime,
                 };
             }
 
