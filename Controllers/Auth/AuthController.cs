@@ -21,9 +21,35 @@ namespace API.Controllers
         {
             this._jWTManager = jWTManager;
         }
+        [AllowAnonymous]
+        [HttpPost("/api/auth")]
+        public async Task<IActionResult> auth(AuthRequestDTO request)
+        {
+            try
+            {
+                var data = new User()
+                {
+                    Name = request.Username,
+                    Password = request.Password
+                };
+                var result = await _jWTManager.Authenticate(data);
+                if (result != null)
+                {
+                    return Ok(result);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
 
         [AllowAnonymous]
-        [HttpPost("api/Auth")]
+        [HttpPost("Login")]
         public async Task<IActionResult> Login(AuthRequestDTO request)
         {
             try
