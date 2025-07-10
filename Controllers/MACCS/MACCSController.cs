@@ -37,11 +37,13 @@ namespace BackendCustoms.Controllers.IRD
                     SendDatetime = null
                 };
                 await _context.ceiridFromIRDs.AddAsync(data);
-                var _customQuery= _context.CustomsDatas.Where(x=>x.MaccsCEIRID==request.ceirId);
-                if(await _customQuery.AnyAsync()){
-                    var temp=await _customQuery.FirstOrDefaultAsync();
-                    if(temp!=null){
-                        temp.CEIRID=request.ceirId;
+                var _customQuery = _context.CustomsDatas.Where(x => x.MaccsCEIRID == request.ceirId);
+                if (await _customQuery.AnyAsync())
+                {
+                    var temp = await _customQuery.FirstOrDefaultAsync();
+                    if (temp != null)
+                    {
+                        temp.CEIRID = request.ceirId;
                     }
                 }
                 await _context.SaveChangesAsync();
@@ -64,7 +66,7 @@ namespace BackendCustoms.Controllers.IRD
                                                       .ToListAsync();
                 if (data.Count == 0)
                 {
-                    return NotFound("No data found");
+                    return Ok(new List<successfulPaymentsResponse>()); // Return empty response if no data found
                 }
                 var groupedData = data.GroupBy(x => new { x.CEIRID, x.RONo })
                                       .Select(g => new
