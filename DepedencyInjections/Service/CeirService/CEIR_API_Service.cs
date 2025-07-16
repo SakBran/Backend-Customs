@@ -51,7 +51,7 @@ namespace BackendCustoms.DepedencyInjections.Service
             // Set the request headers
             // _httpClient.DefaultRequestHeaders.Add("Content-Type", "application/json");
             _httpClient.DefaultRequestHeaders.Remove("Authorization");
-            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + request.Token);
+            _httpClient.DefaultRequestHeaders.Add("Authorization", request.Token);
 
             // Build your request body
             var body = new PaymentConfirmationRequest();
