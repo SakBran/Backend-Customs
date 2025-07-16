@@ -19,7 +19,7 @@ namespace BackendCustoms.DepedencyInjections.Service.CeirService.Request
 
 
         [JsonPropertyName("dateTime")]
-        public DateTime? DateTime { get; set; }
+        public string? DateTime { get; set; }
 
 
         [JsonPropertyName("SUM_CT")]
