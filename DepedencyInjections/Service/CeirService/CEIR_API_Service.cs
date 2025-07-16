@@ -47,20 +47,20 @@ namespace BackendCustoms.DepedencyInjections.Service
 
         public async Task<string> PaymentConfirmation(ConfirmationRequest request)
         {
-            using var client = _httpClient;
+            // Use the class-level HttpClient directly
             // Set the request headers
-            client.DefaultRequestHeaders.Add("Content-Type", "application/json");
-            client.DefaultRequestHeaders.Add("Authorization", "Bearer " + request.Token);
+            // _httpClient.DefaultRequestHeaders.Add("Content-Type", "application/json");
+            _httpClient.DefaultRequestHeaders.Remove("Authorization");
+            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + request.Token);
 
             // Build your request body
             var body = new PaymentConfirmationRequest();
             body = request.body;
 
-
             var json = System.Text.Json.JsonSerializer.Serialize(body);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             // Make the POST request
-            var response = await client.PostAsync(request.ApiURl, content);
+            var response = await _httpClient.PostAsync(request.ApiURl, content);
             return response.StatusCode.ToString();
             // Handle the response
             // if (response.StatusCode)
@@ -77,9 +77,9 @@ namespace BackendCustoms.DepedencyInjections.Service
 
         private async Task<TokenResponseDTO> FetchTokenAsync(GetTokenRequest request)
         {
-            using var client = _httpClient;
+            // Use the class-level HttpClient directly
             // Set the request headers
-            client.DefaultRequestHeaders.Add("Content-Type", "application/json");
+            // _httpClient.DefaultRequestHeaders.Add("Content-Type", "application/json");
             // Build your request body
             var body = new
             {
@@ -91,7 +91,7 @@ namespace BackendCustoms.DepedencyInjections.Service
             var json = System.Text.Json.JsonSerializer.Serialize(body);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             // Make the POST request
-            var response = await client.PostAsync(request.authUrl, content);
+            var response = await _httpClient.PostAsync(request.authUrl, content);
             // Handle the response
             if (response.IsSuccessStatusCode)
             {
