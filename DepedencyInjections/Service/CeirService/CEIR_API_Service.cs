@@ -34,7 +34,7 @@ namespace BackendCustoms.DepedencyInjections.Service
                 // Set cache options and store the data in cache
                 var cacheEntryOptions = new MemoryCacheEntryOptions
                 {
-                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(60)
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(60)
                 };
                 _cache.Set(cacheKey, token, cacheEntryOptions);
             }
