@@ -329,7 +329,7 @@ namespace BackendCustoms.Controllers
             if (status == HttpStatusCode.OK.ToString())
                 return Ok(data);
 
-            return StatusCode(500, new { message = "An error occurred while updating data." });
+            return StatusCode(500, new { message = "CEIR API Status is " + status });
         }
         #region Helper Method for Send   
         private async Task<User?> GetUserFromTokenAsync()
