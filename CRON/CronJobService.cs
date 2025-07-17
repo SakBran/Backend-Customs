@@ -100,7 +100,9 @@ namespace BackendCustoms.CRON
                                 {
                                     CeirId = data.CEIRID,
                                     ReleaseOrderNumber = data.RONo,
-                                    DateTime = data.RODate?.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ", System.Globalization.CultureInfo.InvariantCulture), // ISO 8601 format
+                                    DateTime = data.RODate?.ToUniversalTime()
+                        .AddHours(6.5)
+                        .ToString("yyyy-MM-ddTHH:mm:ss.fffZ", System.Globalization.CultureInfo.InvariantCulture), // ISO 8601 format
                                     SumCT = data.CT,
                                     SumCD = data.CD,
                                     SumAIT = data.AT,

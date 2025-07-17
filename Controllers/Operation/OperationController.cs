@@ -378,7 +378,9 @@ namespace BackendCustoms.Controllers
                 {
                     CeirId = data.CEIRID,
                     ReleaseOrderNumber = data.RONo,
-                    DateTime = data.RODate?.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ", System.Globalization.CultureInfo.InvariantCulture),
+                    DateTime = data.RODate?.ToUniversalTime()
+                        .AddHours(6.5)
+                        .ToString("yyyy-MM-ddTHH:mm:ss.fffZ", System.Globalization.CultureInfo.InvariantCulture),
                     SumCT = data.CT,
                     SumCD = data.CD,
                     SumAIT = data.AT,
