@@ -44,8 +44,14 @@ namespace BackendCustoms.Controllers.IRD
                     if (temp != null)
                     {
                         temp.CEIRID = request.ceirId;
+                        //17.06.2025 Manual sent action
+                        temp.EditBy = "System Schedule";
+                        temp.Remark = "IRD မှ Data ပို့လိုက်ပါသဖြင့် အချက်အလက်များကို စနစ်မှအလိုအလျှောက် ပြင်ဆင်လိုက်ပါသည်။";
+                        temp.EditDatetime = DateTime.Now;
+                        temp.EditCeirid = temp.CEIRID;
                     }
                 }
+
                 await _context.SaveChangesAsync();
                 return Ok();
             }
@@ -108,9 +114,15 @@ namespace BackendCustoms.Controllers.IRD
             try
             {
                 var data = await _context.ceiridFromIRDs.FirstOrDefaultAsync(x => x.CEIRID == request.ceirId);
+
                 if (data == null)
                 {
                     return NotFound("Data not found");
+                }
+                // Check if the data has already been sent
+                if (data.IsSent == true)
+                {
+                    return BadRequest("Cannot delete sent data. RO already sent to IRD.");
                 }
 
                 var deletedLog = new CeiridFromIRD_DeletedLog
