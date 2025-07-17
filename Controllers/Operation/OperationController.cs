@@ -322,8 +322,12 @@ namespace BackendCustoms.Controllers
             data.SendBy = user?.FullName;
             data.SendById = user?.Id;
             data.SentDatetime = DateTime.Now;
-
-
+            var ceirId = await _context.ceiridFromIRDs.FirstOrDefaultAsync(x => x.CEIRID == data.CEIRID);
+            if (ceirId != null)
+            {
+                ceirId.IsSent = true;
+                ceirId.SendDatetime = DateTime.Now;
+            }
             await _context.SaveChangesAsync();
 
             if (status == HttpStatusCode.OK.ToString())

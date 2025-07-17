@@ -44,7 +44,7 @@ namespace BackendCustoms.Controllers
             }
             if (SentDateTo != null)
             {
-                query = query.Where(x => x.SendDatetime <= SentDateTo);
+                query = query.Where(x => x.SendDatetime <= SentDateTo.Value.AddHours(23).AddMinutes(59).AddSeconds(59));
             }
             if (receivedDatetimeFrom != null)
             {
@@ -52,7 +52,7 @@ namespace BackendCustoms.Controllers
             }
             if (receivedDatetimeTo != null)
             {
-                query = query.Where(x => x.ReceivedDatetime <= receivedDatetimeTo);
+                query = query.Where(x => x.ReceivedDatetime <= receivedDatetimeTo.Value.AddHours(23).AddMinutes(59).AddSeconds(59));
             }
             if (!String.IsNullOrEmpty(CeirId))
             {
