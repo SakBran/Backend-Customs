@@ -62,7 +62,7 @@ namespace BackendCustoms.Controllers.IRD
             try
             {
                 var Response = new List<successfulPaymentsResponse>();
-                var data = await _context.CustomsDatas.Where(x => x.ReceivedDatetime >= request.beginDate && x.ReceivedDatetime <= request.endDate)
+                var data = await _context.CustomsDatas.Where(x => x.ReceivedDatetime >= request.beginDate && x.ReceivedDatetime <= request.endDate && x.Status == AppConfig.Sent)
                                                       .ToListAsync();
                 if (data.Count == 0)
                 {
