@@ -62,7 +62,7 @@ namespace BackendCustoms.Controllers
             }
             if (SentDateTo != null)
             {
-                query = query.Where(x => x.SentDatetime <= SentDateTo);
+                query = query.Where(x => x.SentDatetime <= SentDateTo.Value.AddHours(23).AddMinutes(59).AddSeconds(59));
             }
             if (RoDateFrom != null)
             {
@@ -70,7 +70,7 @@ namespace BackendCustoms.Controllers
             }
             if (RoDateTo != null)
             {
-                query = query.Where(x => x.RODate <= RoDateTo);
+                query = query.Where(x => x.RODate <= RoDateTo.Value.AddHours(23).AddMinutes(59).AddSeconds(59));
             }
             if (!String.IsNullOrEmpty(CeirId))
             {
@@ -114,7 +114,7 @@ namespace BackendCustoms.Controllers
             }
             if (SentDateTo != null)
             {
-                query = query.Where(x => x.SentDatetime <= SentDateTo);
+                query = query.Where(x => x.SentDatetime <= SentDateTo.Value.AddHours(23).AddMinutes(59).AddSeconds(59));
             }
             if (RoDateFrom != null)
             {
@@ -122,7 +122,7 @@ namespace BackendCustoms.Controllers
             }
             if (RoDateTo != null)
             {
-                query = query.Where(x => x.RODate <= RoDateTo);
+                query = query.Where(x => x.RODate <= RoDateTo.Value.AddHours(23).AddMinutes(59).AddSeconds(59));
             }
             if (!String.IsNullOrEmpty(CeirId))
             {
@@ -166,7 +166,7 @@ namespace BackendCustoms.Controllers
             }
             if (RoDateTo != null)
             {
-                query = query.Where(x => x.RODate <= RoDateTo);
+                query = query.Where(x => x.RODate <= RoDateTo.Value.AddHours(23).AddMinutes(59).AddSeconds(59));
             }
             if (!String.IsNullOrEmpty(CeirId))
             {
@@ -209,7 +209,7 @@ namespace BackendCustoms.Controllers
             }
             if (RoDateTo != null)
             {
-                query = query.Where(x => x.RODate <= RoDateTo);
+                query = query.Where(x => x.RODate <= RoDateTo.Value.AddHours(23).AddMinutes(59).AddSeconds(59));
             }
             if (!String.IsNullOrEmpty(CeirId))
             {
