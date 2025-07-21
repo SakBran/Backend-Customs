@@ -29,6 +29,19 @@ namespace BackendCustoms.Controllers.IRD
         {
             try
             {
+                //Delete လုပ်ပြီးသားပြန်ပို့တာကိုစစ်တာ
+                var isExistInDelete = await _context.ceiridFromIRD_DeletedLogs.AnyAsync(x => x.CEIRID == request.ceirId);
+                if (isExistInDelete)
+                {
+                    return BadRequest("Cannot send data. CEIRID already deleted.");
+                }
+                //ရှီပြီသားပို့တာကိုစစ်တာ
+                var isExist = await _context.ceiridFromIRDs.AnyAsync(x => x.CEIRID == request.ceirId);
+                if (isExist)
+                {
+                    return BadRequest("Cannot send data. CEIRID already exists.");
+                }
+
                 var data = new CeiridFromIRD
                 {
                     CEIRID = request.ceirId,
