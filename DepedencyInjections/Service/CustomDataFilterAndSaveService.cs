@@ -29,7 +29,7 @@ namespace BackendCustoms.DepedencyInjections.Service
                 if (isCEIR_Exist)
                 {
                     var sentCeirdFromIRD = await _context.ceiridFromIRDs.Where(x => x.CEIRID == data.MaccsCEIRID && x.IsSent == true).Select(x => x.CEIRID).ToListAsync();
-                    var isDuplicate = await _context.CustomsDatas.AnyAsync(x => x.CEIRID == data.MaccsCEIRID && sentCeirdFromIRD.Contains(x.CEIRID));
+                    var isDuplicate = await _context.CustomsDatas.AnyAsync(x => x.CEIRID == data.MaccsCEIRID && x.CEIRID != null && sentCeirdFromIRD.Contains(x.CEIRID));
 
                     if (!isDuplicate)
                     {
