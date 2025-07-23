@@ -42,6 +42,7 @@ namespace BackendCustoms.DepedencyInjections.Service
                         data.CEIRID = data.MaccsCEIRID;
                         data.Status = AppConfig.Duplicate;
                         data.SentDatetime = DateTime.Now;
+                        await _context.CustomsDatas.AddAsync(data);
                         // Optionally log or handle duplicates
                     }
                 }
