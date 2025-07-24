@@ -74,7 +74,7 @@ namespace BackendCustoms.Controllers
             }
             if (!String.IsNullOrEmpty(CeirId))
             {
-                query = query.Where(x => x.MaccsCEIRID == CeirId);
+                query = query.Where(x => x.MaccsCEIRID == CeirId || x.CEIRID == CeirId || x.EditCeirid == CeirId);
             }
             if (!String.IsNullOrEmpty(RoNo))
             {
@@ -126,7 +126,7 @@ namespace BackendCustoms.Controllers
             }
             if (!String.IsNullOrEmpty(CeirId))
             {
-                query = query.Where(x => x.MaccsCEIRID == CeirId);
+                query = query.Where(x => x.MaccsCEIRID == CeirId || x.CEIRID == CeirId || x.EditCeirid == CeirId);
             }
             if (!String.IsNullOrEmpty(RoNo))
             {
@@ -170,7 +170,7 @@ namespace BackendCustoms.Controllers
             }
             if (!String.IsNullOrEmpty(CeirId))
             {
-                query = query.Where(x => x.MaccsCEIRID == CeirId);
+                query = query.Where(x => x.MaccsCEIRID == CeirId || x.CEIRID == CeirId || x.EditCeirid == CeirId);
             }
             if (!String.IsNullOrEmpty(RoNo))
             {
@@ -213,7 +213,7 @@ namespace BackendCustoms.Controllers
             }
             if (!String.IsNullOrEmpty(CeirId))
             {
-                query = query.Where(x => x.MaccsCEIRID == CeirId);
+                query = query.Where(x => x.MaccsCEIRID == CeirId || x.CEIRID == CeirId || x.EditCeirid == CeirId);
             }
             if (!String.IsNullOrEmpty(RoNo))
             {
