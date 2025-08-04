@@ -82,16 +82,40 @@ internal class Program
        
 
         // app.UseHttpsRedirection();
-        app.UseRouting();
-         #region Cors
+        #region Cors
         app.UseCors(
                       builder =>
                       {
-                          builder.WithOrigins("http://136.228.171.17:5280").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+                          builder.WithMethods("GET");
+                          builder.WithMethods("PUT");
+                          builder.WithMethods("POST");
+                          builder.WithMethods("DELETE");
+                          builder.WithMethods("*");
+                          builder.WithHeaders("Authorization");
+                          builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+                          //Code capacitor://localhost for ios device 
+                          //http://localhost for android device
+                          //An origin is the combination of the protocol, domain, 
+                          //and port from which your Ionic app or the external resource is served. 
+                          //For example, apps running in 
+                          //Capacitor have capacitor://localhost (iOS) or http://localhost (Android) as their origin. 
+                          builder.WithOrigins(
+                          "http://136.228.171.17:5080",
+                          "http://136.228.171.17:5080/",
+                          "https://136.228.171.17:5080",
+                          "https://136.228.171.17:5080/",
+                          "http://136.228.171.17:5280",
+                          "http://136.228.171.17:5280/",
+                          "https://136.228.171.17:5280",
+                          "https://136.228.171.17:5280/"
+                         ).AllowAnyMethod().AllowAnyHeader().AllowCredentials();
 
                       }
                   );
         #endregion
+
+        // app.UseHttpsRedirection();
+        app.UseRouting();
         app.UseForwardedHeaders(new ForwardedHeadersOptions
         {
             ForwardedHeaders = ForwardedHeaders.XForwardedFor
