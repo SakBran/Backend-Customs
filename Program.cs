@@ -89,6 +89,7 @@ internal class Program
                           builder.WithMethods("GET");
                           builder.WithMethods("PUT");
                           builder.WithMethods("POST");
+                          //Make sure WebDAV Publishing and HTTP Redirection is unselected when install iis
                           builder.WithMethods("DELETE");
                           builder.WithMethods("*");
                           builder.WithHeaders("Authorization");
