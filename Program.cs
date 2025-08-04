@@ -72,50 +72,26 @@ internal class Program
         }
         else
         {
+            app.UseSwagger();
             app.UseDeveloperExceptionPage();
-            app.UseHsts();
+            //app.UseHsts();
+            app.UseSwaggerUI();
         }
 
         // app.UseHttpsRedirection();
-        #region Cors
+       
+
+        // app.UseHttpsRedirection();
+        app.UseRouting();
+         #region Cors
         app.UseCors(
                       builder =>
                       {
-                          builder.WithMethods("GET");
-                          builder.WithMethods("PUT");
-                          builder.WithMethods("POST");
-                          builder.WithMethods("DELETE");
-                          builder.WithMethods("*");
-                          builder.WithHeaders("Authorization");
-                          builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
-                          //Code capacitor://localhost for ios device 
-                          //http://localhost for android device
-                          //An origin is the combination of the protocol, domain, 
-                          //and port from which your Ionic app or the external resource is served. 
-                          //For example, apps running in 
-                          //Capacitor have capacitor://localhost (iOS) or http://localhost (Android) as their origin. 
-                          builder.WithOrigins(
-                          "https://vehicle.myanmartradenet.com",
-                          "https://testingvehicle.myanmartradenet.com",
-                          "https://www.mpu-ecommerce.com",
-                          "https://www.mpuecomuat.com",
-                          "capacitor://localhost",
-                          "http://localhost",
-                          "http://localhost/",
-                          "https://localhost",
-                          "https://localhost/",
-                          "http://localhost:*",
-                          "http://localhost:8100",
-                          "http://localhost:8100/",
-                          "http://localhost:3000",
-                          "http://localhost:3000/").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+                          builder.WithOrigins("http://136.228.171.17:5280").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
 
                       }
                   );
         #endregion
-
-        // app.UseHttpsRedirection();
-        app.UseRouting();
         app.UseForwardedHeaders(new ForwardedHeadersOptions
         {
             ForwardedHeaders = ForwardedHeaders.XForwardedFor

@@ -12,7 +12,6 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [AllowAnonymous]
     public class BaseAPIController<T> : ControllerBase where T : class
     {
         private readonly ApplicationDbContext _context;
