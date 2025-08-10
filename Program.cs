@@ -72,9 +72,14 @@ internal class Program
         }
         else
         {
+            app.UseSwagger();
             app.UseDeveloperExceptionPage();
-            app.UseHsts();
+            //app.UseHsts();
+            app.UseSwaggerUI();
         }
+
+        // app.UseHttpsRedirection();
+       
 
         // app.UseHttpsRedirection();
         #region Cors
@@ -84,6 +89,7 @@ internal class Program
                           builder.WithMethods("GET");
                           builder.WithMethods("PUT");
                           builder.WithMethods("POST");
+                          //Make sure WebDAV Publishing and HTTP Redirection is unselected when install iis
                           builder.WithMethods("DELETE");
                           builder.WithMethods("*");
                           builder.WithHeaders("Authorization");
@@ -95,20 +101,15 @@ internal class Program
                           //For example, apps running in 
                           //Capacitor have capacitor://localhost (iOS) or http://localhost (Android) as their origin. 
                           builder.WithOrigins(
-                          "https://vehicle.myanmartradenet.com",
-                          "https://testingvehicle.myanmartradenet.com",
-                          "https://www.mpu-ecommerce.com",
-                          "https://www.mpuecomuat.com",
-                          "capacitor://localhost",
-                          "http://localhost",
-                          "http://localhost/",
-                          "https://localhost",
-                          "https://localhost/",
-                          "http://localhost:*",
-                          "http://localhost:8100",
-                          "http://localhost:8100/",
-                          "http://localhost:3000",
-                          "http://localhost:3000/").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+                          "http://136.228.171.17:5080",
+                          "http://136.228.171.17:5080/",
+                          "https://136.228.171.17:5080",
+                          "https://136.228.171.17:5080/",
+                          "http://136.228.171.17:5280",
+                          "http://136.228.171.17:5280/",
+                          "https://136.228.171.17:5280",
+                          "https://136.228.171.17:5280/"
+                         ).AllowAnyMethod().AllowAnyHeader().AllowCredentials();
 
                       }
                   );
