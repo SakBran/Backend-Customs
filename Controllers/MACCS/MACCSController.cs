@@ -81,10 +81,10 @@ namespace BackendCustoms.Controllers.IRD
             try
             {
                 var Response = new List<successfulPaymentsResponse>();
-                // var data = await _context.CustomsDatas.Where(x => x.SentDatetime >= request.beginDate && x.SentDatetime <= request.endDate.AddHours(23).AddMinutes(59).AddSeconds(59) && x.Status == AppConfig.Sent)
-                //                                       .ToListAsync();
-                var data = await _context.CustomsDatas.Where(x => x.RODate >= request.beginDate && x.RODate <= request.endDate.AddHours(23).AddMinutes(59).AddSeconds(59) && x.Status == AppConfig.Sent)
+                var data = await _context.CustomsDatas.Where(x => x.SentDatetime >= request.beginDate && x.SentDatetime <= request.endDate.AddHours(23).AddMinutes(59).AddSeconds(59) && x.Status == AppConfig.Sent)
                                                       .ToListAsync();
+                // var data = await _context.CustomsDatas.Where(x => x.RODate >= request.beginDate && x.RODate <= request.endDate.AddHours(23).AddMinutes(59).AddSeconds(59) && x.Status == AppConfig.Sent)
+                //                                       .ToListAsync();
                 if (data.Count == 0)
                 {
                     return Ok(new List<successfulPaymentsResponse>()); // Return empty response if no data found
