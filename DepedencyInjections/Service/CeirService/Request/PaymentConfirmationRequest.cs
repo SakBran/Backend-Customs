@@ -11,18 +11,18 @@ namespace BackendCustoms.DepedencyInjections.Service.CeirService.Request
     public class PaymentConfirmationRequest
     {
 
-        [JsonPropertyName("CeirId")]
-        [JsonProperty("CeirId")]
+        [JsonPropertyName("ceirId")]
+        [JsonProperty("ceirId")]
         public string? CeirId { get; set; }
 
 
-        [JsonPropertyName("ReleaseOrderNumber")]
-        [JsonProperty("ReleaseOrderNumber")]
+        [JsonPropertyName("releaseOrderNumber")]
+        [JsonProperty("releaseOrderNumber")]
         public string? ReleaseOrderNumber { get; set; }
 
 
-        [JsonPropertyName("DateTime")]
-        [JsonProperty("DateTime")]
+        [JsonPropertyName("dateTime")]
+        [JsonProperty("dateTime")]
         public string? DateTime { get; set; }
 
 
