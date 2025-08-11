@@ -101,14 +101,18 @@ internal class Program
                           //For example, apps running in 
                           //Capacitor have capacitor://localhost (iOS) or http://localhost (Android) as their origin. 
                           builder.WithOrigins(
-                          "http://136.228.171.17:5080",
+                           "http://136.228.171.17:5080",
                           "http://136.228.171.17:5080/",
                           "https://136.228.171.17:5080",
                           "https://136.228.171.17:5080/",
                           "http://136.228.171.17:5280",
                           "http://136.228.171.17:5280/",
                           "https://136.228.171.17:5280",
-                          "https://136.228.171.17:5280/"
+                          "https://136.228.171.17:5280/",
+                          "http://ceirid.customs.gov.mm:5280/",
+                          "http://ceirid.customs.gov.mm:5280",
+                          "https://ceirid.customs.gov.mm/",
+                          "https://ceirid.customs.gov.mm"
                          ).AllowAnyMethod().AllowAnyHeader().AllowCredentials();
 
                       }
