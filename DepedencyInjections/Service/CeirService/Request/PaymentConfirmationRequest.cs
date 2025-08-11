@@ -21,8 +21,8 @@ namespace BackendCustoms.DepedencyInjections.Service.CeirService.Request
         public string? ReleaseOrderNumber { get; set; }
 
 
-        [JsonPropertyName("dateTime")]
-        [JsonProperty("dateTime")]
+        [JsonPropertyName("DateTime")]
+        [JsonProperty("DateTime")]
         public string? DateTime { get; set; }
 
 
