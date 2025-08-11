@@ -9,14 +9,16 @@ namespace BackendCustoms.Controllers.IRD.Response
 {
     public class successfulPaymentsResponse
     {
+        [JsonPropertyName("DateTime")]
+        [JsonProperty("DateTime")]
         public DateTime NotificationDateTime { get; set; }
 
-        [JsonPropertyName("ceirId")]
-        [JsonProperty("ceirId")]
+        [JsonPropertyName("CeirId")]
+        [JsonProperty("CeirId")]
         public required string CeirId { get; set; }
 
-        [JsonPropertyName("releaseOrderNumber")]
-        [JsonProperty("releaseOrderNumber")]
+        [JsonPropertyName("ReleaseOrderNumber")]
+        [JsonProperty("ReleaseOrderNumber")]
         public required string ReleaseOrderNumber { get; set; }
 
         [JsonPropertyName("SUM_CT")]
