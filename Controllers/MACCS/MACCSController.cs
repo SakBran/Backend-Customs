@@ -94,6 +94,7 @@ namespace BackendCustoms.Controllers.IRD
                                       {
                                           CEIRID = g.Key.CEIRID,
                                           RONo = g.Key.RONo,
+                                          SentDatetime = g.Max(x => x.SentDatetime),
                                           SumCt = g.Sum(x => x.CT),
                                           SumCd = g.Sum(x => x.CD),
                                           SumAit = g.Sum(x => x.AT),
@@ -103,7 +104,7 @@ namespace BackendCustoms.Controllers.IRD
                 {
                     var responseItem = new successfulPaymentsResponse
                     {
-                        NotificationDateTime = DateTime.Now,
+                        NotificationDateTime = (DateTime)item.SentDatetime,
                         CeirId = item.CEIRID ?? string.Empty,
                         ReleaseOrderNumber = item.RONo ?? string.Empty,
                         SumCt = item.SumCt ?? 0,
