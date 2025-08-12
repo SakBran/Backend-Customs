@@ -104,7 +104,9 @@ namespace BackendCustoms.Controllers.IRD
                 {
                     var responseItem = new successfulPaymentsResponse
                     {
-                        NotificationDateTime = (DateTime)item.SentDatetime,
+                        NotificationDateTime = item.SentDatetime.HasValue
+                            ? item.SentDatetime.Value.ToUniversalTime().ToString("yyyy-MM-dd'T'HH:mm:ss.fff'Z'")
+                            : string.Empty,
                         CeirId = item.CEIRID ?? string.Empty,
                         ReleaseOrderNumber = item.RONo ?? string.Empty,
                         SumCt = item.SumCt ?? 0,

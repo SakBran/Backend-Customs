@@ -11,7 +11,7 @@ namespace BackendCustoms.Controllers.IRD.Response
     {
         [JsonPropertyName("DateTime")]
         [JsonProperty("DateTime")]
-        public DateTime NotificationDateTime { get; set; }
+        public string? NotificationDateTime { get; set; }
 
         [JsonPropertyName("CeirId")]
         [JsonProperty("CeirId")]
@@ -36,5 +36,7 @@ namespace BackendCustoms.Controllers.IRD.Response
         [JsonPropertyName("SUM_RF")]
         [JsonProperty("SUM_RF")]
         public decimal SumRf { get; set; }
+
+
     }
 }
